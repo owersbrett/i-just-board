@@ -10,17 +10,30 @@ import Foundation
 import SwiftUI
 struct MainContentView: View {
     @EnvironmentObject var boardController: BoardController
+    @State private var selectedCard: Card?
+    @State private var selectedColumn: BoardColumn?
+    @State private var selectedBoard: Board?
 
     var body: some View {
         VStack {
             if let board = boardController.board {
-                Text(board.name).font(.title)
-                Text(board.description).font(.subheadline)
+                VStack{
+                    Text(board.name).font(.title)
+                    Text(board.description).font(.subheadline)
 
+                }.onTapGesture {
+                    selectedBoard = board
+                }
+                
                 ScrollView(.horizontal) {
                     HStack(alignment: .top, spacing: 20) {
                         ForEach(board.boardColumns) { column in
-                            BoardColumnView(column: column)
+                            BoardColumnView(column: column) { card in
+                               
+                                self.selectedCard = card
+                            }.onTapGesture {
+                                    self.selectedColumn = column
+                            }
                         }
 
                         Button(action: {
@@ -38,6 +51,26 @@ struct MainContentView: View {
                     }
                     .padding()
                 }
+                if let currentCard = selectedCard {
+                    SelectedCardView(card: currentCard, onSave: { 
+                        updatedCard in
+                        boardController.updateCard(updatedCard)
+                        self.selectedCard = nil
+                    })
+                } else if let currentColumn = selectedColumn {
+                    SelectedColumnView(column: currentColumn, onSave: {
+                        updatedColumn in
+                        boardController.updateColumn(updatedColumn)
+                        self.selectedColumn = nil
+                    })
+                } else if let currentBoard = selectedBoard {
+                    SelectedBoardView(board: currentBoard, onSave: {
+                        updatedBoard in
+                        boardController.updateBoard(updatedBoard)
+                        self.selectedBoard = nil
+                    })
+                }
+                
             } else {
                 Text("Select a board or create a new one")
             }

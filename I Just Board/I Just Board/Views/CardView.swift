@@ -8,14 +8,9 @@
 import Foundation
 import SwiftUI
 
-struct BoardColumnCardView: View {
+struct CardView: View {
     @EnvironmentObject var boardController: BoardController
-
     let card: Card
-    init(card: Card) {
-        self.card = card
-        debugPrint("Initializing Card")
-    }
 
     var body: some View {
         VStack {

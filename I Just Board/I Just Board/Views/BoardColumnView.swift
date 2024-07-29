@@ -14,10 +14,8 @@ struct BoardColumnView: View {
     @EnvironmentObject var boardController: BoardController
 
     let column: BoardColumn
-    init(column: BoardColumn) {
-        self.column = column
-        debugPrint("Initializing")
-    }
+    let onSelectCard: (Card) -> Void
+
 
     var body: some View {
         VStack {
@@ -27,7 +25,10 @@ struct BoardColumnView: View {
                 ScrollView(.vertical) {
                     VStack(spacing: 20) {
                         ForEach(column.cards) { card in
-                            BoardColumnCardView(card: card)
+                            CardView(card: card)
+                                .onTapGesture {
+                                    onSelectCard(card)
+                                }
                         }
 
                         Button(action: {
