@@ -11,7 +11,8 @@ class CardListController: ObservableObject  {
     @Published var cards: [Card] = []
 
     func addCard(cardName: String, cardDescription: String)  {
-        let card: Card = Card.createDefault()
+//        let card: Card = Card.createDefault()
+        let card = Card(name: "My New Card", description: "This is my new card")
         self.cards.append(card)
     }
 }

@@ -11,12 +11,7 @@ import SwiftData
 @main
 struct I_Just_BoardApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Board.self,
-            Card.self,
-            BoardColumn.self
-
-        ])
+        let schema = Schema([])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {

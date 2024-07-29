@@ -13,10 +13,10 @@ struct BoardCardView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(board.boardName)
+            Text(board.name)
                 .font(.headline)
 
-            Text(board.boardDescription)
+            Text(board.description)
                 .foregroundColor(.secondary)
         }
         .padding()

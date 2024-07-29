@@ -17,7 +17,7 @@ struct SidebarView: View {
     var body: some View {
 
         List(boards, selection: $selectedBoard) { board in
-            Text(board.boardName)
+            Text(board.name)
                 .tag(board).onTapGesture {
                     debugPrint("Printing did tap")
                     boardListController.selectBoard(board: board)

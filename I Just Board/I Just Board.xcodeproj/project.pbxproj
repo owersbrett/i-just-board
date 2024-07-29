@@ -31,6 +31,7 @@
 		616B767E2C56F2230067757D /* CardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B767D2C56F2230067757D /* CardController.swift */; };
 		616B76802C56F3790067757D /* CardListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B767F2C56F3790067757D /* CardListController.swift */; };
 		616B76822C56F4320067757D /* CurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B76812C56F4320067757D /* CurrentViewController.swift */; };
+		61B8CACB2C5844CD005D003C /* BoardColumnCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8CACA2C5844CD005D003C /* BoardColumnCardView.swift */; };
 		61DB9BF32C56FE7A00AE3516 /* NewBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BF22C56FE7A00AE3516 /* NewBoardView.swift */; };
 		61DB9BF62C5714D000AE3516 /* GridOfBoardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BF52C5714D000AE3516 /* GridOfBoardsView.swift */; };
 		61DB9BF82C57172800AE3516 /* BoardCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BF72C57172800AE3516 /* BoardCardView.swift */; };
@@ -83,6 +84,7 @@
 		616B767D2C56F2230067757D /* CardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardController.swift; sourceTree = "<group>"; };
 		616B767F2C56F3790067757D /* CardListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListController.swift; sourceTree = "<group>"; };
 		616B76812C56F4320067757D /* CurrentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentViewController.swift; sourceTree = "<group>"; };
+		61B8CACA2C5844CD005D003C /* BoardColumnCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumnCardView.swift; sourceTree = "<group>"; };
 		61DB9BF22C56FE7A00AE3516 /* NewBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBoardView.swift; sourceTree = "<group>"; };
 		61DB9BF52C5714D000AE3516 /* GridOfBoardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridOfBoardsView.swift; sourceTree = "<group>"; };
 		61DB9BF72C57172800AE3516 /* BoardCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCardView.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				611109D32C57218B004A24E3 /* BoardColumnView.swift */,
 				61DB9BFD2C57197F00AE3516 /* MainContentView.swift */,
 				611109CF2C572011004A24E3 /* TopBarView.swift */,
+				61B8CACA2C5844CD005D003C /* BoardColumnCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				61DB9BF82C57172800AE3516 /* BoardCardView.swift in Sources */,
 				616B76662C569CB60067757D /* BoardView.swift in Sources */,
 				616B76692C56A0B90067757D /* HorizontalBarView.swift in Sources */,
+				61B8CACB2C5844CD005D003C /* BoardColumnCardView.swift in Sources */,
 				616B76782C56EE2F0067757D /* Card.swift in Sources */,
 				61DB9BF62C5714D000AE3516 /* GridOfBoardsView.swift in Sources */,
 				616B767E2C56F2230067757D /* CardController.swift in Sources */,

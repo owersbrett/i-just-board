@@ -13,7 +13,7 @@ class BoardListController: ObservableObject  {
     @Published var selectedBoard: Board?
 
     func addBoard(boardName: String, boardDescription: String)  {
-        let board: Board = Board(boardName: boardName, boardDescription: boardDescription)
+        let board: Board = Board(name: boardName, description: boardDescription, boardColumns: [])
         debugPrint("Adding board with name: " + boardName + " and description: " + boardDescription)
         self.boards.append(board)
     }

@@ -25,7 +25,7 @@ struct ContentView: View {
             SidebarView(boards: boardListController.boards, selectedBoard: $boardListController.selectedBoard)
                 .frame(minWidth: 200, idealWidth: 250, maxWidth: 300)
             
-            MainContentView(selectedBoard: $boardListController.selectedBoard)
+            MainContentView()
         }
         .environmentObject(boardController)
         .environmentObject(boardListController)
