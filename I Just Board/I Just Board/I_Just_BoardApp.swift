@@ -13,7 +13,8 @@ struct I_Just_BoardApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Board.self,
-            Card.self
+            Card.self,
+            BoardColumn.self
 
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -27,7 +28,8 @@ struct I_Just_BoardApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(boardListController: BoardListController.init(), currentViewController: CurrentViewController.init())
+            ContentView()
+//            ContentView(boardListController: BoardListController.init(), currentViewController: CurrentViewController.init())
         }
         .modelContainer(sharedModelContainer)
     }

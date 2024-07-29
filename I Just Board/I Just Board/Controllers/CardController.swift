@@ -8,7 +8,7 @@
 import Foundation
 
 class CardController: ObservableObject  {
-    @Published var card: Card = Card(cardName: "I Just Card", cardDescription: "I Just Card Description")
+    @Published var card: Card = Card.createDefault()
 
     func updateCardName(cardName: String)  {
         self.card.cardName = cardName

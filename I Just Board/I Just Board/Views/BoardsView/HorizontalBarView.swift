@@ -14,9 +14,6 @@ struct HorizontalBarView: View {
     @Binding
     var complexity: Complexity;
     
-    
-
-    
     var body: some View
     {
         HStack {

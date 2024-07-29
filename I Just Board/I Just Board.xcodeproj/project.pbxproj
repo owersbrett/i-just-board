@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		611109D02C572011004A24E3 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611109CF2C572011004A24E3 /* TopBarView.swift */; };
+		611109D22C572118004A24E3 /* BoardColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611109D12C572118004A24E3 /* BoardColumn.swift */; };
+		611109D42C57218B004A24E3 /* BoardColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611109D32C57218B004A24E3 /* BoardColumnView.swift */; };
 		616B76352C5696DD0067757D /* I_Just_BoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B76342C5696DD0067757D /* I_Just_BoardApp.swift */; };
 		616B76372C5696DD0067757D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B76362C5696DD0067757D /* ContentView.swift */; };
 		616B763B2C5696DD0067757D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 616B763A2C5696DD0067757D /* Assets.xcassets */; };
@@ -28,6 +31,11 @@
 		616B767E2C56F2230067757D /* CardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B767D2C56F2230067757D /* CardController.swift */; };
 		616B76802C56F3790067757D /* CardListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B767F2C56F3790067757D /* CardListController.swift */; };
 		616B76822C56F4320067757D /* CurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B76812C56F4320067757D /* CurrentViewController.swift */; };
+		61DB9BF32C56FE7A00AE3516 /* NewBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BF22C56FE7A00AE3516 /* NewBoardView.swift */; };
+		61DB9BF62C5714D000AE3516 /* GridOfBoardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BF52C5714D000AE3516 /* GridOfBoardsView.swift */; };
+		61DB9BF82C57172800AE3516 /* BoardCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BF72C57172800AE3516 /* BoardCardView.swift */; };
+		61DB9BFC2C57197200AE3516 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BFB2C57197200AE3516 /* SidebarView.swift */; };
+		61DB9BFE2C57197F00AE3516 /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BFD2C57197F00AE3516 /* MainContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +56,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		611109CF2C572011004A24E3 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
+		611109D12C572118004A24E3 /* BoardColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumn.swift; sourceTree = "<group>"; };
+		611109D32C57218B004A24E3 /* BoardColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardColumnView.swift; sourceTree = "<group>"; };
 		616B76312C5696DD0067757D /* I Just Board.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I Just Board.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		616B76342C5696DD0067757D /* I_Just_BoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I_Just_BoardApp.swift; sourceTree = "<group>"; };
 		616B76362C5696DD0067757D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,6 +83,11 @@
 		616B767D2C56F2230067757D /* CardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardController.swift; sourceTree = "<group>"; };
 		616B767F2C56F3790067757D /* CardListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListController.swift; sourceTree = "<group>"; };
 		616B76812C56F4320067757D /* CurrentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentViewController.swift; sourceTree = "<group>"; };
+		61DB9BF22C56FE7A00AE3516 /* NewBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBoardView.swift; sourceTree = "<group>"; };
+		61DB9BF52C5714D000AE3516 /* GridOfBoardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridOfBoardsView.swift; sourceTree = "<group>"; };
+		61DB9BF72C57172800AE3516 /* BoardCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCardView.swift; sourceTree = "<group>"; };
+		61DB9BFB2C57197200AE3516 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		61DB9BFD2C57197F00AE3516 /* MainContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +138,7 @@
 		616B76332C5696DD0067757D /* I Just Board */ = {
 			isa = PBXGroup;
 			children = (
+				616B76362C5696DD0067757D /* ContentView.swift */,
 				616B76622C56999A0067757D /* Model */,
 				616B76612C56998F0067757D /* Controllers */,
 				616B76602C5699770067757D /* Views */,
@@ -160,11 +177,11 @@
 		616B76602C5699770067757D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				616B76362C5696DD0067757D /* ContentView.swift */,
-				616B76652C569CB60067757D /* BoardView.swift */,
-				616B766C2C56A56B0067757D /* BoardsView.swift */,
-				616B76682C56A0B90067757D /* HorizontalBarView.swift */,
-				616B76752C56ED9A0067757D /* CardView.swift */,
+				61DB9BF42C5714BA00AE3516 /* BoardsView */,
+				61DB9BFB2C57197200AE3516 /* SidebarView.swift */,
+				611109D32C57218B004A24E3 /* BoardColumnView.swift */,
+				61DB9BFD2C57197F00AE3516 /* MainContentView.swift */,
+				611109CF2C572011004A24E3 /* TopBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,8 +206,23 @@
 				616B766A2C56A1960067757D /* CurrentView.swift */,
 				616B766E2C56A6510067757D /* Board.swift */,
 				616B76772C56EE2F0067757D /* Card.swift */,
+				611109D12C572118004A24E3 /* BoardColumn.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		61DB9BF42C5714BA00AE3516 /* BoardsView */ = {
+			isa = PBXGroup;
+			children = (
+				616B76752C56ED9A0067757D /* CardView.swift */,
+				616B766C2C56A56B0067757D /* BoardsView.swift */,
+				61DB9BF72C57172800AE3516 /* BoardCardView.swift */,
+				61DB9BF22C56FE7A00AE3516 /* NewBoardView.swift */,
+				616B76682C56A0B90067757D /* HorizontalBarView.swift */,
+				616B76652C569CB60067757D /* BoardView.swift */,
+				61DB9BF52C5714D000AE3516 /* GridOfBoardsView.swift */,
+			);
+			path = BoardsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,19 +358,27 @@
 				616B76372C5696DD0067757D /* ContentView.swift in Sources */,
 				616B76802C56F3790067757D /* CardListController.swift in Sources */,
 				616B767A2C56F2060067757D /* ComplexityController.swift in Sources */,
+				61DB9BF32C56FE7A00AE3516 /* NewBoardView.swift in Sources */,
 				616B767C2C56F2180067757D /* BoardController.swift in Sources */,
 				616B766D2C56A56B0067757D /* BoardsView.swift in Sources */,
 				616B76742C56EC840067757D /* BoardListController.swift in Sources */,
+				611109D22C572118004A24E3 /* BoardColumn.swift in Sources */,
 				616B76642C5699B90067757D /* Complexity.swift in Sources */,
+				611109D42C57218B004A24E3 /* BoardColumnView.swift in Sources */,
+				61DB9BF82C57172800AE3516 /* BoardCardView.swift in Sources */,
 				616B76662C569CB60067757D /* BoardView.swift in Sources */,
 				616B76692C56A0B90067757D /* HorizontalBarView.swift in Sources */,
 				616B76782C56EE2F0067757D /* Card.swift in Sources */,
+				61DB9BF62C5714D000AE3516 /* GridOfBoardsView.swift in Sources */,
 				616B767E2C56F2230067757D /* CardController.swift in Sources */,
 				616B76352C5696DD0067757D /* I_Just_BoardApp.swift in Sources */,
 				616B766B2C56A1960067757D /* CurrentView.swift in Sources */,
 				616B76762C56ED9A0067757D /* CardView.swift in Sources */,
+				61DB9BFC2C57197200AE3516 /* SidebarView.swift in Sources */,
+				611109D02C572011004A24E3 /* TopBarView.swift in Sources */,
 				616B76822C56F4320067757D /* CurrentViewController.swift in Sources */,
 				616B766F2C56A6510067757D /* Board.swift in Sources */,
+				61DB9BFE2C57197F00AE3516 /* MainContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
