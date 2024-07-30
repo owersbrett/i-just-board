@@ -12,7 +12,7 @@ class CardListController: ObservableObject  {
 
     func addCard(cardName: String, cardDescription: String)  {
 //        let card: Card = Card.createDefault()
-        let card = Card(name: "My New Card", description: "This is my new card")
+        let card = Card(name: "My New Card", description: "This is my new card", index: cards.count + 1)
         self.cards.append(card)
     }
 }

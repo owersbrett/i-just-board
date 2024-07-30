@@ -10,7 +10,6 @@ import Foundation
 import SwiftData
 
 struct Card: Identifiable, Codable, Hashable {
-    static private let lastIndexKey = "card.keys.index"
 
     static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.id == rhs.id && 
@@ -20,27 +19,19 @@ struct Card: Identifiable, Codable, Hashable {
     }
     
     var id = UUID()
+    var parentId: UUID
     var name: String
     var description: String    
     var index: Int
     
-    init(name: String, description: String) {
+    init(name: String, description: String, index: Int, parentId: UUID) {
         self.id = UUID()
            self.name = name
            self.description = description
-           self.index = Card.incrementIndex()
+           self.index = index
+        self.parentId = parentId
        }
     
-    private static func incrementIndex() -> Int {
-         let currentIndex = UserDefaults.standard.integer(forKey: lastIndexKey)
-         let newIndex = currentIndex + 1
-         UserDefaults.standard.set(newIndex, forKey: lastIndexKey)
-         return newIndex
-     }
-     
-     // Method to reset the index (if needed)
-     static func resetIndex() {
-         UserDefaults.standard.set(0, forKey: lastIndexKey)
-     }
+
 
 }

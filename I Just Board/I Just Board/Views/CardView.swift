@@ -14,8 +14,9 @@ struct CardView: View {
    var body: some View {
         VStack {
                 Text(card.name).font(.title)
+            if (!card.description.isEmpty){
                 Text(card.description).font(.subheadline)
-         
+            }
         }
     .padding()
         .background(Color.gray)

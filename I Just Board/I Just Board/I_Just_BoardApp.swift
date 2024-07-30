@@ -24,7 +24,6 @@ struct I_Just_BoardApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-//            ContentView(boardListController: BoardListController.init(), currentViewController: CurrentViewController.init())
         }
         .modelContainer(sharedModelContainer)
     }

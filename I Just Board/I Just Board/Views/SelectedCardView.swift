@@ -12,6 +12,7 @@ import SwiftUI
 struct SelectedCardView: View {
     @State var card: Card
     let onSave: (Card) -> Void
+    let onDelete: (Card) -> Void
 
     var body: some View {
         VStack {
@@ -24,20 +25,36 @@ struct SelectedCardView: View {
             TextField("Description", text: $card.description)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-
-            Button(action: {
-                debugPrint("Updating Card")
-                debugPrint(card.name)
-                debugPrint(card.description)
-                onSave(card)
-            }) {
-                Text("Save")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+            HStack{
+                Button(action: {
+                    debugPrint("Deleting Card")
+                    debugPrint(card.name)
+                    debugPrint(card.description)
+                    onDelete(card)
+                }) {
+                    Text("Delete")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
+                Button(action: {
+                    debugPrint("Updating Card")
+                    debugPrint(card.name)
+                    debugPrint(card.description)
+                    onSave(card)
+                }) {
+                    Text("Save")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
+                
             }
-            .padding()
+            
         }
         .padding()
         .background(Color.gray.opacity(0.2))

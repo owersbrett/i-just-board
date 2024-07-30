@@ -9,7 +9,6 @@ import Foundation
 import SwiftData
 
 struct BoardColumn: Identifiable, Codable, Hashable {
-    static private let lastIndexKey = "boardColumn.keys.index"
 
     
     static func == (lhs: BoardColumn, rhs: BoardColumn) -> Bool {
@@ -20,24 +19,17 @@ struct BoardColumn: Identifiable, Codable, Hashable {
         lhs.index == rhs.index
     }
     
-    init(name: String, description: String, cards: [Card]) {
+    init(name: String, description: String, cards: [Card], index: Int) {
         self.id = UUID()
            self.name = name
            self.description = description
            self.cards = cards
-           self.index = BoardColumn.incrementIndex()
+           self.index = index
        }
-    private static func incrementIndex() -> Int {
-        let currentIndex = UserDefaults.standard.integer(forKey: lastIndexKey)
-        let newIndex = currentIndex + 1
-        UserDefaults.standard.set(newIndex, forKey: lastIndexKey)
-        return newIndex
-    }
+
     
     // Method to reset the index (if needed)
-    static func resetIndex() {
-        UserDefaults.standard.set(0, forKey: lastIndexKey)
-    }
+
     var id: UUID
     var index: Int
     var name: String

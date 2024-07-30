@@ -21,8 +21,8 @@ class BoardListController: ObservableObject  {
         loadBoards()
     }
     
-    func addBoard(boardName: String, boardDescription: String)  {
-        let board: Board = Board(name: boardName, description: boardDescription, boardColumns: [])
+    func                                                                             addBoard(boardName: String, boardDescription: String)  {
+        let board: Board = Board(name: boardName, description: boardDescription, boardColumns: [], index: boards.count + 1)
         debugPrint("Adding board with name: " + boardName + " and description: " + boardDescription)
         self.boards.append(board)
     }
@@ -51,5 +51,13 @@ class BoardListController: ObservableObject  {
         } catch {
             print("Failed to load boards: \(error.localizedDescription)")
         }
+    }
+    func deleteBoards(){
+        self.boards = []
+    }
+    
+    
+    func updateBoards(boards: [Board]) {
+        self.boards = boards
     }
 }

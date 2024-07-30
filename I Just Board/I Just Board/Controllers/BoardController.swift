@@ -20,7 +20,51 @@ class BoardController: ObservableObject  {
             .assign(to: \.board, on: self)
             .store(in: &cancellables)
     }
+    func deleteCard(card: Card){
+        guard var board = board else {return}
+        guard var column = board.boardColumns.first(where: {return $0.id == card.parentId}) else {return }
+        guard let columnIndex = board.boardColumns.firstIndex(where: {return $0.id == card.parentId}) else {return }
+        guard let cardIndex = column.cards.firstIndex(where: {return $0.id == card.id}) else {return }
+                column.cards.remove(at: cardIndex)
+                board.boardColumns[columnIndex] = column
+                self.board = board
+                self.boardListController.updateBoard(updatedBoard: board)
+                
+        
+    }
+    func moveColumn(_ column: BoardColumn, toIndex newIndex: Int) {
+        guard let board = board else { return }
+        guard let oldIndex = board.boardColumns.firstIndex(where: { $0.id == column.id }) else { return }
+        guard let actualNewIndex = board.boardColumns.firstIndex(where: {$0.index == newIndex }) else { return }
+        var newColumns = board.boardColumns
+        
+                newColumns = validateColumnIndexes(for: newColumns)
+                newColumns.remove(at: oldIndex)
+                newColumns.insert(column, at: actualNewIndex)
+            
+  
+        
+        // Update indexes
+        for (index, column) in newColumns.enumerated() {
+            newColumns[index].index = index
+        }
+        
+        self.board?.boardColumns = newColumns
+    }
     
+    func validateColumnIndexes(for columns: [BoardColumn]) -> [BoardColumn]{
+        // Ensure the indices are sequential
+        var newColumns: [BoardColumn] = []
+        for (index, column) in columns.enumerated() {
+            newColumns.append(column)
+            newColumns[index].index = index
+        }
+        
+        
+        // Update the board columns with validated indices
+        return newColumns
+    }
+
     
     func addBoardColumn(boardColumn: BoardColumn){
         guard var board = self.board else { return }
