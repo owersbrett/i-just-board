@@ -10,27 +10,24 @@ import Combine
 
 class BoardController: ObservableObject  {
     @Published var board: Board?
+    private let boardListController: BoardListController
     private var cancellables = Set<AnyCancellable>()
     
     
     init(boardListController: BoardListController) {
+        self.boardListController = boardListController
         boardListController.$selectedBoard
             .assign(to: \.board, on: self)
             .store(in: &cancellables)
     }
     
     
-    func changeBoardName(boardName: String)  {
-        //        self.board?.boardName = boardName;
-    }
-    func changeBoardDescription(boardDescription: String){
-        //        self.board?.boardDescription = boardDescription;
-    }
-    
     func addBoardColumn(boardColumn: BoardColumn){
         guard var board = self.board else { return }
         board.boardColumns.append(boardColumn)
         debugPrint(board.boardColumns.count)
+        self.boardListController.updateBoard(updatedBoard: board)
+
         self.board = board
     }
     func addBoardColumnCard(card: Card, boardColumnId: UUID) {
@@ -38,6 +35,8 @@ class BoardController: ObservableObject  {
         guard let columnIndex = board.boardColumns.firstIndex(where: { $0.id == boardColumnId }) else { return }
         
         board.boardColumns[columnIndex].cards.append(card)
+        self.boardListController.updateBoard(updatedBoard: board)
+
         self.board = board
         
         
@@ -57,11 +56,14 @@ class BoardController: ObservableObject  {
                     updatedColumns[targetColumnIndex].cards.append(card)
                     board.boardColumns = updatedColumns
                     self.board = board
+                    self.boardListController.updateBoard(updatedBoard: board)
+
                     return
                 }
             }
         }
     }
+    
     //    can be optimized by passing along the current column
     func updateCard(_ updatedCard: Card) {
         guard var board = self.board else { return }
@@ -70,6 +72,8 @@ class BoardController: ObservableObject  {
             if let cardIndex = column.cards.firstIndex(where: { $0.id == updatedCard.id }) {
                 board.boardColumns[columnIndex].cards[cardIndex] = updatedCard
                 self.board = board
+                self.boardListController.updateBoard(updatedBoard: board)
+
                 return
             }
         }
@@ -82,6 +86,8 @@ class BoardController: ObservableObject  {
         if let columnIndex = board.boardColumns.firstIndex(where: { $0.id == updatedColumn.id }){
             board.boardColumns[columnIndex] = updatedColumn
             self.board = board
+            self.boardListController.updateBoard(updatedBoard: board)
+
             return
         }
         
@@ -89,8 +95,10 @@ class BoardController: ObservableObject  {
     
     func updateBoard(_ updatedBoard: Board) {
         self.board = updatedBoard
+        self.boardListController.updateBoard(updatedBoard: updatedBoard)
         return
     }
+    
     
     
     

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SidebarView: View {
-    let boards: [Board]
+    @Binding var boards: [Board]
     @Binding var selectedBoard: Board?
     @EnvironmentObject var boardController: BoardController
     @EnvironmentObject var boardListController: BoardListController

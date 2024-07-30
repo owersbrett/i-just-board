@@ -26,12 +26,14 @@ struct SelectedCardView: View {
                 .padding()
 
             Button(action: {
+                debugPrint("Updating Card")
+                debugPrint(card.name)
+                debugPrint(card.description)
                 onSave(card)
             }) {
                 Text("Save")
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }

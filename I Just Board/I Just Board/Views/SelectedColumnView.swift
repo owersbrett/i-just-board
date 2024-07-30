@@ -26,13 +26,15 @@ struct SelectedColumnView: View {
                 .padding()
 
             Button(action: {
-                debugPrint(column.name)
-                onSave(column)
+                
+                    debugPrint("Updating column")
+                    debugPrint(column.name)
+                    debugPrint(column.description)          
+                    onSave(column)
             }) {
                 Text("Save")
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }

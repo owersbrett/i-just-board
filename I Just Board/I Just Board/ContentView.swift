@@ -22,7 +22,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Text("").hidden()
-            SidebarView(boards: boardListController.boards, selectedBoard: $boardListController.selectedBoard)
+            SidebarView(boards: $boardListController.boards, selectedBoard: $boardListController.selectedBoard)
                 .frame(minWidth: 200, idealWidth: 250, maxWidth: 300)
             
             MainContentView()

@@ -15,7 +15,7 @@ struct SelectedBoardView: View {
 
     var body: some View {
         VStack {
-            Text("Edit Column").font(.headline)
+            Text("Edit Board").font(.headline)
 
             TextField("Title", text: $board.name)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -31,7 +31,6 @@ struct SelectedBoardView: View {
                 Text("Save")
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }

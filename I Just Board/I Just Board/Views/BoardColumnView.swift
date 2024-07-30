@@ -32,7 +32,7 @@ struct BoardColumnView: View {
                         }
 
                         Button(action: {
-                            let card = Card(id: UUID(), name: "I Just A Card", description: "I Just A Card Description")
+                            let card = Card(name: "I Just A Card", description: "I Just A Card Description")
                             boardController.addBoardColumnCard(card: card, boardColumnId: column.id)
                         }) {
                             VStack {

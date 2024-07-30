@@ -27,12 +27,11 @@ struct MainContentView: View {
                 
                 ScrollView(.horizontal) {
                     HStack(alignment: .top, spacing: 20) {
-                        ForEach(board.boardColumns) { column in
+                        ForEach(board.boardColumns.sorted(by: { $0.index < $1.index })) { column in
                             BoardColumnView(column: column) { card in
-                               
                                 self.selectedCard = card
                             }.onTapGesture {
-                                    self.selectedColumn = column
+                                self.selectedColumn = column
                             }
                         }
 

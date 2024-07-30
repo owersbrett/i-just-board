@@ -11,8 +11,7 @@ import SwiftUI
 struct CardView: View {
     @EnvironmentObject var boardController: BoardController
     let card: Card
-
-    var body: some View {
+   var body: some View {
         VStack {
                 Text(card.name).font(.title)
                 Text(card.description).font(.subheadline)

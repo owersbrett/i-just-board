@@ -10,25 +10,44 @@ import SwiftData
 
 
 struct Board: Identifiable, Codable, Hashable {
+    static private let lastIndexKey = "board.keys.index"
+
     static func == (lhs: Board, rhs: Board) -> Bool {
-        return lhs.id.uuidString == rhs.id.uuidString && lhs.boardColumns.count == rhs.boardColumns.count
+        return lhs.id == rhs.id &&
+        lhs.boardColumns == rhs.boardColumns &&
+        lhs.description == rhs.description &&
+        lhs.name == rhs.name &&
+        lhs.index == rhs.index
     }
     
-    var id = UUID()
+    var id: UUID
     var name: String
     var description: String
     var boardColumns: [BoardColumn]
+    var index: Int
 
+    // Default initializer
+       init(name: String, description: String, boardColumns: [BoardColumn]) {
+           self.id = UUID()
+           self.name = name
+           self.description = description
+           self.boardColumns = boardColumns
+           self.index = Board.incrementIndex()
+       }
     
     
-//    var boardColumns: [BoardColumn] = []
-//    var createDate: Date
-//    var updateDate: Date
-//    var boardName: String
-//    var boardDescription: String
-//    
-//    var persistentBackingData: any BackingData<Board>
-
+    // Method to increment the index
+    private static func incrementIndex() -> Int {
+        let currentIndex = UserDefaults.standard.integer(forKey: lastIndexKey)
+        let newIndex = currentIndex + 1
+        UserDefaults.standard.set(newIndex, forKey: lastIndexKey)
+        return newIndex
+    }
+    
+    // Method to reset the index (if needed)
+    static func resetIndex() {
+        UserDefaults.standard.set(0, forKey: lastIndexKey)
+    }
     
 }
 
