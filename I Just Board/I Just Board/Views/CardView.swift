@@ -10,14 +10,18 @@ import SwiftUI
 
 struct CardView: View {
     @EnvironmentObject var boardController: BoardController
+    @EnvironmentObject var windowSize: WindowSize
+    
     let card: Card
-   var body: some View {
+    var body: some View {
         VStack {
-                Text(card.name).font(.title)
+            Text(card.name).font(.title).frame(alignment: .leading)
             if (!card.description.isEmpty){
-                Text(card.description).font(.subheadline)
+                Text(card.description).font(.subheadline).frame(alignment: .leading)
             }
-        }
+        }        .frame(width: windowSize.size.width * 0.15, alignment: .leading)
+            
+
     .padding()
         .background(Color.gray)
         .cornerRadius(8)

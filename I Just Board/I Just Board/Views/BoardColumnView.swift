@@ -10,21 +10,33 @@ import SwiftUI
 import UniformTypeIdentifiers
 struct BoardColumnView: View {
     @EnvironmentObject var boardController: BoardController
-    @State private var cardToDelete: Card?
-    @State private var showDeleteConfirmation: Bool = false
+    @EnvironmentObject var windowSize: WindowSize
+    @EnvironmentObject var confirmationController: ConfirmationController
     
-    let column: BoardColumn
+    
+    @Binding var column: BoardColumn
     let onSelectCard: (Card) -> Void
     let onColumnDropped: (BoardColumn, Int) -> Void
     
     var body: some View {
         VStack {
-            Text(column.name).font(.title)
-            Text(column.description).font(.subheadline)
+            HStack{
+                //                EditableTextField(text: $column.name, onSubmit: {
+                //                    updatedText in
+                //                    var updatedColumn = column
+                //                    updatedColumn.name = updatedText
+                //                    boardController.updateColumn(updatedColumn)
+                //                })
+                Text(column.name)
+                
+            }
+            
             
             ScrollView(.vertical) {
                 VStack(spacing: 20) {
-                    ForEach(column.cards) { card in
+                    
+                    
+                    ForEach(column.cards.sorted(by: {$0.index < $1.index}), id: \.id) { card in
                         CardView(card: card)
                             .onTapGesture {
                                 onSelectCard(card)
@@ -35,8 +47,8 @@ struct BoardColumnView: View {
                             }
                             .contextMenu{
                                 Button(action: {
-                                    cardToDelete = card
-                                    showDeleteConfirmation = true
+                                    confirmationController.setShowAlert(showAlert: true, itemToConfirm: .card(card), action: .delete)
+                                    
                                     
                                 }){
                                     Text("Delete Card: " + (card.name))
@@ -52,46 +64,36 @@ struct BoardColumnView: View {
                             Image(systemName: "plus")
                             Text("Add Card")
                         }
-                        .frame(width: 200, height: 50)
+                        .frame(width: windowSize.size.width * 0.15, height: 50)
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(8)
                     }
                 }
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                .onDrop(of: [UTType.text], isTargeted: nil) { providers in
-                    providers.first?.loadItem(forTypeIdentifier: UTType.text.identifier, options: nil) { (item, error) in
-                        if let data = item as? Data, let uuidString = String(data: data, encoding: .utf8), let cardId = UUID(uuidString: uuidString) {
-                            DispatchQueue.main.async {
-                                boardController.moveCard(cardId: cardId, toColumnId: column.id)
-                            }
+            }
+            .padding()
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(24)
+            .onDrop(of: [UTType.text], isTargeted: nil) { providers in
+                providers.first?.loadItem(forTypeIdentifier: UTType.text.identifier, options: nil) { (item, error) in
+                    if let data = item as? Data, let uuidString = String(data: data, encoding: .utf8), let cardId = UUID(uuidString: uuidString) {
+                        DispatchQueue.main.async {
+                            boardController.moveCard(cardId: cardId, toColumnId: column.id)
                         }
                     }
-                    return true
                 }
+                return true
             }
-        }
-        .onDrag {
-            NSItemProvider(object: column.id.uuidString as NSString)
-        }
-        .onDrop(of: [UTType.text], delegate: ColumnDropDelegate(column: column, boardController: boardController, onColumnDropped: onColumnDropped))
-        .alert(isPresented: $showDeleteConfirmation) {
-            Alert(
-                title: Text("Delete Board"),
-                message: Text("Are you sure you want to delete this board?"),
-                primaryButton: .destructive(Text("Delete")) {
-                    if let _cardToDelete = cardToDelete {
-                        boardController.deleteCard(card: _cardToDelete)
-                        cardToDelete = nil
-                    }
-                    showDeleteConfirmation = false
-                },
-                secondaryButton: .cancel(){
-                    cardToDelete = nil
-                    showDeleteConfirmation = false
-                }
-            )
-        }
+            
+            
+        }.frame(alignment: .leading)
+            .background(Color.black)
+            .cornerRadius(16)
+            .shadow(radius: 2)
+            .onDrag {
+                NSItemProvider(object: column.id.uuidString as NSString)
+            }
+            .onDrop(of: [UTType.text], delegate: ColumnDropDelegate(column: column, boardController: boardController, onColumnDropped: onColumnDropped))
+        
     }
+    
 }

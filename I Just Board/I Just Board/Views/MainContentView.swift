@@ -10,13 +10,9 @@ import SwiftUI
 
 struct MainContentView: View {
     @EnvironmentObject var boardController: BoardController
-    @State private var selectedCard: Card?
-    @State private var selectedColumn: BoardColumn?
-    @State private var selectedBoard: Board?
-    @State private var boardColumnToDelete: BoardColumn?
-    @State private var showDeleteConfirmation: Bool = false
+    @EnvironmentObject var confirmationController: ConfirmationController
     
-
+    
     var body: some View {
         VStack {
             if let board = boardController.board {
@@ -28,34 +24,30 @@ struct MainContentView: View {
                         }
                     }.padding()
                         .background(RoundedRectangle(cornerRadius: 8).fill(Color.black)).padding()
-                        
                     
-                    .onTapGesture {
-                        selectedBoard = board
-                    }
+                    
                     
                     ScrollView(.horizontal) {
                         HStack(alignment: .top, spacing: 20) {
-                            ForEach(board.boardColumns.sorted(by: { $0.index < $1.index })) { column in
-                                BoardColumnView(column: column, onSelectCard: { card in
-                                    self.selectedCard = card
+                            ForEach(board.boardColumns.sorted(by: { $0.index < $1.index }), id: \.id) { column in
+                                BoardColumnView(column: $column, onSelectCard: { card in
+                                    //                                    self.selectedCard = card
                                 }, onColumnDropped: { droppedColumn, targetIndex in
                                     boardController.moveColumn(droppedColumn, toIndex: targetIndex)
                                 })
                                 .onTapGesture {
-                                    self.selectedColumn = column
+                                    //                                    self.selectedColumn = column
                                 }
                                 .contextMenu{
                                     Button(action: {
-                                        boardColumnToDelete = column
-                                        showDeleteConfirmation = true
+                                        confirmationController.setShowAlert(showAlert:true, itemToConfirm: .column(column), action: .delete)
                                         
                                     }){
                                         Text("Delete Column: " + (column.name))
                                     }
                                 }
                             }
-
+                            
                             Button(action: {
                                 let boardColumn = BoardColumn(name: "Column", description: "", cards: [], index: board.boardColumns.count)
                                 boardController.addBoardColumn(boardColumn: boardColumn)
@@ -74,36 +66,8 @@ struct MainContentView: View {
                     .frame(maxHeight: .infinity, alignment: .top) // Ensure the ScrollView fills available space and aligns to the top
                 }
                 .frame(maxHeight: .infinity, alignment: .top) // Ensure the VStack fills available space and aligns to the top
-
-                if let currentCard = selectedCard {
-                    SelectedCardView(card: currentCard, onSave: {
-                        updatedCard in
-                        boardController.updateCard(updatedCard)
-                        self.selectedCard = nil
-                    }, onCancel: {
-                        updatedCard in
-                        self.selectedCard = nil
-                    }).frame(maxWidth: 500)
-                } else if let currentColumn = selectedColumn {
-                    SelectedColumnView(column: currentColumn, onSave: {
-                        updatedColumn in
-                        boardController.updateColumn(updatedColumn)
-                        self.selectedColumn = nil
-                    }, onCancel: {
-                        updatedColumn in
-                        self.selectedColumn = nil
-                    }).frame(maxWidth: 500)
-                } else if let currentBoard = selectedBoard {
-                    SelectedBoardView(board: currentBoard, onSave: {
-                        updatedBoard in
-                        boardController.updateBoard(updatedBoard)
-                        self.selectedBoard = nil
-                    }, onCancel: {
-                        updatedBoard in
-                        self.selectedBoard = nil
-                    }
-                    ).frame(maxWidth: 500)
-                }
+                
+                
                 
                 Spacer() // Push the content to the top
             } else {
@@ -112,20 +76,15 @@ struct MainContentView: View {
                 Spacer()
             }
         }
-        .alert(isPresented: $showDeleteConfirmation) {
+        .alert(isPresented: $confirmationController.showAlert) {
             Alert(
-                title: Text("Delete Column"),
-                message: Text("Are you sure you want to delete this column?"),
+                title: Text("Delete " + confirmationController.getLabel(specific: false)),
+                message: Text("Are you sure you want to delete " + confirmationController.getLabel(specific: true)),
                 primaryButton: .destructive(Text("Delete")) {
-                    if let _columnToDelete = boardColumnToDelete {
-                        boardController.deleteBoardColumn(columnToDelete: _columnToDelete)
-                        boardColumnToDelete = nil
-                    }
-                    showDeleteConfirmation = false
+                    confirmationController.confirmItem()
                 },
                 secondaryButton: .cancel(){
-                    boardColumnToDelete  = nil
-                    showDeleteConfirmation = false
+                    confirmationController.setShowAlert(showAlert: false, itemToConfirm: nil, action: nil)
                 }
             )
         }

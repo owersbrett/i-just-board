@@ -13,7 +13,7 @@ struct BoardColumn: Identifiable, Codable, Hashable {
     
     static func == (lhs: BoardColumn, rhs: BoardColumn) -> Bool {
         return lhs.id == rhs.id &&
-        lhs.cards == rhs.cards &&
+        lhs.cards.elementsEqual(rhs.cards) &&
         lhs.name == rhs.name &&
         lhs.description == rhs.description &&
         lhs.index == rhs.index

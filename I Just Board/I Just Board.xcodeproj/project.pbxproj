@@ -28,6 +28,10 @@
 		616B767A2C56F2060067757D /* ComplexityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B76792C56F2060067757D /* ComplexityController.swift */; };
 		616B767C2C56F2180067757D /* BoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B767B2C56F2180067757D /* BoardController.swift */; };
 		616B76822C56F4320067757D /* CurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B76812C56F4320067757D /* CurrentViewController.swift */; };
+		619274852C5AB5DC009C68AC /* WindowSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619274842C5AB5DC009C68AC /* WindowSize.swift */; };
+		619274872C5AB632009C68AC /* WindowSizeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619274862C5AB632009C68AC /* WindowSizeReaderView.swift */; };
+		6192748A2C5AC8E1009C68AC /* EditableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619274892C5AC8E1009C68AC /* EditableTextField.swift */; };
+		6192748D2C5AD0A1009C68AC /* ConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6192748C2C5AD0A1009C68AC /* ConfirmationController.swift */; };
 		61B8CACB2C5844CD005D003C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8CACA2C5844CD005D003C /* CardView.swift */; };
 		61B8CACD2C585102005D003C /* SelectedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8CACC2C585102005D003C /* SelectedCardView.swift */; };
 		61B8CACF2C5855E1005D003C /* SelectedColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8CACE2C5855E1005D003C /* SelectedColumnView.swift */; };
@@ -79,6 +83,10 @@
 		616B76792C56F2060067757D /* ComplexityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexityController.swift; sourceTree = "<group>"; };
 		616B767B2C56F2180067757D /* BoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardController.swift; sourceTree = "<group>"; };
 		616B76812C56F4320067757D /* CurrentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentViewController.swift; sourceTree = "<group>"; };
+		619274842C5AB5DC009C68AC /* WindowSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowSize.swift; sourceTree = "<group>"; };
+		619274862C5AB632009C68AC /* WindowSizeReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowSizeReaderView.swift; sourceTree = "<group>"; };
+		619274892C5AC8E1009C68AC /* EditableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTextField.swift; sourceTree = "<group>"; };
+		6192748C2C5AD0A1009C68AC /* ConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationController.swift; sourceTree = "<group>"; };
 		61B8CACA2C5844CD005D003C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		61B8CACC2C585102005D003C /* SelectedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCardView.swift; sourceTree = "<group>"; };
 		61B8CACE2C5855E1005D003C /* SelectedColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedColumnView.swift; sourceTree = "<group>"; };
@@ -194,6 +202,7 @@
 		616B76602C5699770067757D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				619274882C5AC8D2009C68AC /* Editable */,
 				616B76362C5696DD0067757D /* ContentView.swift */,
 				61DB9BFB2C57197200AE3516 /* SidebarView.swift */,
 				611109D32C57218B004A24E3 /* BoardColumnView.swift */,
@@ -203,6 +212,7 @@
 				61B8CACE2C5855E1005D003C /* SelectedColumnView.swift */,
 				61B8CAD02C5855F1005D003C /* SelectedBoardView.swift */,
 				61BA77932C59E5A000787D8E /* SidebarItemView.swift */,
+				619274862C5AB632009C68AC /* WindowSizeReaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,6 +224,7 @@
 				616B76732C56EC840067757D /* BoardListController.swift */,
 				616B76792C56F2060067757D /* ComplexityController.swift */,
 				616B76812C56F4320067757D /* CurrentViewController.swift */,
+				6192748C2C5AD0A1009C68AC /* ConfirmationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -226,8 +237,17 @@
 				616B766E2C56A6510067757D /* Board.swift */,
 				616B76772C56EE2F0067757D /* Card.swift */,
 				611109D12C572118004A24E3 /* BoardColumn.swift */,
+				619274842C5AB5DC009C68AC /* WindowSize.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		619274882C5AC8D2009C68AC /* Editable */ = {
+			isa = PBXGroup;
+			children = (
+				619274892C5AC8E1009C68AC /* EditableTextField.swift */,
+			);
+			path = Editable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,10 +382,12 @@
 			files = (
 				616B76372C5696DD0067757D /* ContentView.swift in Sources */,
 				61553D662C58838F00E86BEF /* ColumnDropDelegate.swift in Sources */,
+				619274872C5AB632009C68AC /* WindowSizeReaderView.swift in Sources */,
 				616B767A2C56F2060067757D /* ComplexityController.swift in Sources */,
 				616B767C2C56F2180067757D /* BoardController.swift in Sources */,
 				616B76742C56EC840067757D /* BoardListController.swift in Sources */,
 				61B8CACF2C5855E1005D003C /* SelectedColumnView.swift in Sources */,
+				619274852C5AB5DC009C68AC /* WindowSize.swift in Sources */,
 				611109D22C572118004A24E3 /* BoardColumn.swift in Sources */,
 				61553D612C587ACB00E86BEF /* FileManager.swift in Sources */,
 				616B76642C5699B90067757D /* Complexity.swift in Sources */,
@@ -374,6 +396,7 @@
 				61B8CACB2C5844CD005D003C /* CardView.swift in Sources */,
 				616B76782C56EE2F0067757D /* Card.swift in Sources */,
 				616B76352C5696DD0067757D /* I_Just_BoardApp.swift in Sources */,
+				6192748D2C5AD0A1009C68AC /* ConfirmationController.swift in Sources */,
 				61B8CAD12C5855F1005D003C /* SelectedBoardView.swift in Sources */,
 				616B766B2C56A1960067757D /* CurrentView.swift in Sources */,
 				61BA77942C59E5A000787D8E /* SidebarItemView.swift in Sources */,
@@ -383,6 +406,7 @@
 				616B766F2C56A6510067757D /* Board.swift in Sources */,
 				61553D682C589A1000E86BEF /* BoardDropDelegate.swift in Sources */,
 				61DB9BFE2C57197F00AE3516 /* MainContentView.swift in Sources */,
+				6192748A2C5AC8E1009C68AC /* EditableTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

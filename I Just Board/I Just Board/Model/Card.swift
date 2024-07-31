@@ -15,7 +15,8 @@ struct Card: Identifiable, Codable, Hashable {
         return lhs.id == rhs.id && 
         lhs.name == rhs.name &&
         lhs.description == rhs.description &&
-        lhs.index == rhs.index
+        lhs.index == rhs.index &&
+        lhs.parentId == rhs.parentId
     }
     
     var id = UUID()
