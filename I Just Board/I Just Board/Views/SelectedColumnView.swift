@@ -12,6 +12,7 @@ import SwiftUI
 struct SelectedColumnView: View {
     @State var column: BoardColumn
     let onSave: (BoardColumn) -> Void
+    let onCancel: (BoardColumn) -> Void
 
     var body: some View {
         VStack {
@@ -25,20 +26,33 @@ struct SelectedColumnView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
 
-            Button(action: {
-                
-                    debugPrint("Updating column")
-                    debugPrint(column.name)
-                    debugPrint(column.description)          
-                    onSave(column)
-            }) {
-                Text("Save")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+            HStack{
+                Button(action: {
+                        onCancel(column)
+                }) {
+                    Text("Cancel")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
+                Button(action: {
+                    
+                        debugPrint("Updating column")
+                        debugPrint(column.name)
+                        debugPrint(column.description)
+                        onSave(column)
+                }) {
+                    Text("Save")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
             }
-            .padding()
+            
         }
         .padding()
         .background(Color.gray.opacity(0.2))

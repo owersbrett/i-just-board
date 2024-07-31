@@ -12,6 +12,7 @@ import SwiftUI
 struct SelectedBoardView: View {
     @State var board: Board
     let onSave: (Board) -> Void
+    let onCancel: (Board) -> Void
 
     var body: some View {
         VStack {
@@ -24,17 +25,29 @@ struct SelectedBoardView: View {
             TextField("Description", text: $board.description)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-
-            Button(action: {
-                onSave(board)
-            }) {
-                Text("Save")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+            HStack{
+                Button(action: {
+                    onCancel(board)
+                }) {
+                    Text("Cancel")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
+                Button(action: {
+                    onSave(board)
+                }) {
+                    Text("Save")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
             }
-            .padding()
+            
         }
         .padding()
         .background(Color.gray.opacity(0.2))

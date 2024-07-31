@@ -12,7 +12,7 @@ import SwiftUI
 struct SelectedCardView: View {
     @State var card: Card
     let onSave: (Card) -> Void
-    let onDelete: (Card) -> Void
+    let onCancel: (Card) -> Void
 
     var body: some View {
         VStack {
@@ -27,12 +27,9 @@ struct SelectedCardView: View {
                 .padding()
             HStack{
                 Button(action: {
-                    debugPrint("Deleting Card")
-                    debugPrint(card.name)
-                    debugPrint(card.description)
-                    onDelete(card)
+                    onCancel(card)
                 }) {
-                    Text("Delete")
+                    Text("Cancel")
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
                         .foregroundColor(.white)

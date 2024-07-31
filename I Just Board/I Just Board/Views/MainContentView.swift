@@ -13,6 +13,9 @@ struct MainContentView: View {
     @State private var selectedCard: Card?
     @State private var selectedColumn: BoardColumn?
     @State private var selectedBoard: Board?
+    @State private var boardColumnToDelete: BoardColumn?
+    @State private var showDeleteConfirmation: Bool = false
+    
 
     var body: some View {
         VStack {
@@ -25,7 +28,7 @@ struct MainContentView: View {
                         }
                     }.padding()
                         .background(RoundedRectangle(cornerRadius: 8).fill(Color.black)).padding()
-
+                        
                     
                     .onTapGesture {
                         selectedBoard = board
@@ -41,6 +44,15 @@ struct MainContentView: View {
                                 })
                                 .onTapGesture {
                                     self.selectedColumn = column
+                                }
+                                .contextMenu{
+                                    Button(action: {
+                                        boardColumnToDelete = column
+                                        showDeleteConfirmation = true
+                                        
+                                    }){
+                                        Text("Delete Column: " + (column.name))
+                                    }
                                 }
                             }
 
@@ -68,9 +80,8 @@ struct MainContentView: View {
                         updatedCard in
                         boardController.updateCard(updatedCard)
                         self.selectedCard = nil
-                    }, onDelete: {
+                    }, onCancel: {
                         updatedCard in
-                        boardController.deleteCard(card: updatedCard)
                         self.selectedCard = nil
                     }).frame(maxWidth: 500)
                 } else if let currentColumn = selectedColumn {
@@ -78,13 +89,20 @@ struct MainContentView: View {
                         updatedColumn in
                         boardController.updateColumn(updatedColumn)
                         self.selectedColumn = nil
+                    }, onCancel: {
+                        updatedColumn in
+                        self.selectedColumn = nil
                     }).frame(maxWidth: 500)
                 } else if let currentBoard = selectedBoard {
                     SelectedBoardView(board: currentBoard, onSave: {
                         updatedBoard in
                         boardController.updateBoard(updatedBoard)
                         self.selectedBoard = nil
-                    }).frame(maxWidth: 500)
+                    }, onCancel: {
+                        updatedBoard in
+                        self.selectedBoard = nil
+                    }
+                    ).frame(maxWidth: 500)
                 }
                 
                 Spacer() // Push the content to the top
@@ -93,6 +111,23 @@ struct MainContentView: View {
                 Text("I Just Boards").frame(alignment: .center)
                 Spacer()
             }
+        }
+        .alert(isPresented: $showDeleteConfirmation) {
+            Alert(
+                title: Text("Delete Column"),
+                message: Text("Are you sure you want to delete this column?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    if let _columnToDelete = boardColumnToDelete {
+                        boardController.deleteBoardColumn(columnToDelete: _columnToDelete)
+                        boardColumnToDelete = nil
+                    }
+                    showDeleteConfirmation = false
+                },
+                secondaryButton: .cancel(){
+                    boardColumnToDelete  = nil
+                    showDeleteConfirmation = false
+                }
+            )
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top) // Ensure the outer VStack fills available space and aligns to the top
     }

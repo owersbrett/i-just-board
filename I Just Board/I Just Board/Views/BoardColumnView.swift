@@ -10,16 +10,18 @@ import SwiftUI
 import UniformTypeIdentifiers
 struct BoardColumnView: View {
     @EnvironmentObject var boardController: BoardController
-
+    @State private var cardToDelete: Card?
+    @State private var showDeleteConfirmation: Bool = false
+    
     let column: BoardColumn
     let onSelectCard: (Card) -> Void
     let onColumnDropped: (BoardColumn, Int) -> Void
-
+    
     var body: some View {
         VStack {
             Text(column.name).font(.title)
             Text(column.description).font(.subheadline)
-
+            
             ScrollView(.vertical) {
                 VStack(spacing: 20) {
                     ForEach(column.cards) { card in
@@ -27,11 +29,21 @@ struct BoardColumnView: View {
                             .onTapGesture {
                                 onSelectCard(card)
                             }
+                        
                             .onDrag {
                                 NSItemProvider(object: card.id.uuidString as NSString)
                             }
+                            .contextMenu{
+                                Button(action: {
+                                    cardToDelete = card
+                                    showDeleteConfirmation = true
+                                    
+                                }){
+                                    Text("Delete Card: " + (card.name))
+                                }
+                            }
                     }
-
+                    
                     Button(action: {
                         let card = Card(name: "Card", description: "", index: column.cards.count + 1, parentId: column.id)
                         boardController.addBoardColumnCard(card: card, boardColumnId: column.id)
@@ -64,5 +76,22 @@ struct BoardColumnView: View {
             NSItemProvider(object: column.id.uuidString as NSString)
         }
         .onDrop(of: [UTType.text], delegate: ColumnDropDelegate(column: column, boardController: boardController, onColumnDropped: onColumnDropped))
+        .alert(isPresented: $showDeleteConfirmation) {
+            Alert(
+                title: Text("Delete Board"),
+                message: Text("Are you sure you want to delete this board?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    if let _cardToDelete = cardToDelete {
+                        boardController.deleteCard(card: _cardToDelete)
+                        cardToDelete = nil
+                    }
+                    showDeleteConfirmation = false
+                },
+                secondaryButton: .cancel(){
+                    cardToDelete = nil
+                    showDeleteConfirmation = false
+                }
+            )
+        }
     }
 }

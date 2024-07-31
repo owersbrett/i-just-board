@@ -20,6 +20,14 @@ class BoardController: ObservableObject  {
             .assign(to: \.board, on: self)
             .store(in: &cancellables)
     }
+    
+    func deleteBoardColumn(columnToDelete: BoardColumn){
+        guard var board = board else {return}
+        
+        board.boardColumns.removeAll(where: {$0.id == columnToDelete.id})
+        self.board = board
+    }
+    
     func deleteCard(card: Card){
         guard var board = board else {return}
         guard var column = board.boardColumns.first(where: {return $0.id == card.parentId}) else {return }
