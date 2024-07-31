@@ -30,7 +30,19 @@ struct MainContentView: View {
                     ScrollView(.horizontal) {
                         HStack(alignment: .top, spacing: 20) {
                             ForEach(board.boardColumns.sorted(by: { $0.index < $1.index }), id: \.id) { column in
-                                BoardColumnView(column: $column, onSelectCard: { card in
+                                let bindingColumn = Binding<BoardColumn>(
+                                                                 get: {
+                                                                     guard let index = board.boardColumns.firstIndex(where: { $0.id == column.id }) else {
+                                                                         return column
+                                                                     }
+                                                                     return boardController.board?.boardColumns[index] ?? column
+                                                                 },
+                                                                 set: { newValue in
+                                                                     guard let index = board.boardColumns.firstIndex(where: { $0.id == column.id }) else { return }
+                                                                     boardController.board?.boardColumns[index] = newValue
+                                                                 }
+                                                             )
+                                BoardColumnView(column: bindingColumn, onSelectCard: { card in
                                     //                                    self.selectedCard = card
                                 }, onColumnDropped: { droppedColumn, targetIndex in
                                     boardController.moveColumn(droppedColumn, toIndex: targetIndex)
@@ -81,7 +93,7 @@ struct MainContentView: View {
                 title: Text("Delete " + confirmationController.getLabel(specific: false)),
                 message: Text("Are you sure you want to delete " + confirmationController.getLabel(specific: true)),
                 primaryButton: .destructive(Text("Delete")) {
-                    confirmationController.confirmItem()
+                    confirmationController.confirmItem(boardController: boardController)
                 },
                 secondaryButton: .cancel(){
                     confirmationController.setShowAlert(showAlert: false, itemToConfirm: nil, action: nil)

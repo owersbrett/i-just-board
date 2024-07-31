@@ -7,7 +7,7 @@ import SwiftData
 
 struct ContentView: View {
     @StateObject private var windowSize = WindowSize()
-    @StateObject private var confirmationController = ConfirmationController(boardController:  nil)
+    @StateObject private var confirmationController = ConfirmationController()
     
     @StateObject private var currentViewController = CurrentViewController()
     @StateObject private var boardController: BoardController
@@ -19,7 +19,6 @@ struct ContentView: View {
         _boardListController = StateObject(wrappedValue: boardListController)
         let boardController = BoardController(boardListController: boardListController)
         _boardController = StateObject(wrappedValue: BoardController(boardListController: boardListController))
-        _confirmationController = StateObject(wrappedValue: ConfirmationController(boardController: boardController))
     }
 
     var body: some View {

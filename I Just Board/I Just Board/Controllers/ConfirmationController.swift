@@ -11,12 +11,8 @@ class ConfirmationController: ObservableObject {
     @Published var showAlert = false
     @Published var itemToConfirm: ConfirmableItem?
     @Published var action: ConfirmableAction?
-    private let boardController: BoardController?
 
-    init(boardController: BoardController?) {
-        self.boardController = boardController
-    }
-    
+
     func setShowAlert(showAlert: Bool, itemToConfirm: ConfirmableItem?, action: ConfirmableAction?) {
         self.showAlert = showAlert
         self.itemToConfirm = itemToConfirm
@@ -64,10 +60,10 @@ class ConfirmationController: ObservableObject {
         case save
     }
     
-    func confirmItem() {
+    func confirmItem(boardController: BoardController) {
         switch action {
         case .delete:
-            deleteItem()
+            deleteItem(boardController: boardController)
         case .save:
             debugPrint("Implement save confirmation")
         default:
@@ -75,20 +71,20 @@ class ConfirmationController: ObservableObject {
         }
     }
     
-    private func deleteItem() {
+    private func deleteItem(boardController: BoardController) {
         guard let item = itemToConfirm else { return }
         debugPrint("Deleting item")
         debugPrint(item.toString())
         switch item {
         case .card(let card):
             debugPrint(card.name)
-            boardController?.deleteCard(card: card)
+            boardController.deleteCard(card: card)
         case .column(let column):
             debugPrint(column.name)
-            boardController?.deleteBoardColumn(columnToDelete: column)
+            boardController.deleteBoardColumn(columnToDelete: column)
         case .board(let board):
             debugPrint(board.name)
-            boardController?.deleteBoard(board: board)
+            boardController.deleteBoard(board: board)
         }
         resetConfirmation()
     }
