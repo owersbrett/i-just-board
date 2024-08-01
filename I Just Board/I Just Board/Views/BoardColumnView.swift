@@ -37,7 +37,19 @@ struct BoardColumnView: View {
                     
                     
                     ForEach(column.cards.sorted(by: {$0.index < $1.index}), id: \.id) { card in
-                        CardView(card: card)
+                        let bindingCard = Binding<Card>(
+                                                         get: {
+                                                             guard let index = column.cards.firstIndex(where: { $0.id == card.id }) else {
+                                                                 return card
+                                                             }
+                                                             return column.cards[index]
+                                                         },
+                                                         set: { newValue in
+                                                             guard let index = column.cards.firstIndex(where: { $0.id == card.id }) else { return }
+                                                             column.cards[index] = newValue
+                                                         }
+                                                     )
+                        CardView(card: bindingCard)
                             .onTapGesture {
                                 onSelectCard(card)
                             }
@@ -54,10 +66,20 @@ struct BoardColumnView: View {
                                     Text("Delete Card: " + (card.name))
                                 }
                             }
+                            .onDrop(of: [UTType.text], isTargeted: nil) { providers in
+                                providers.first?.loadItem(forTypeIdentifier: UTType.text.identifier, options: nil) { (item, error) in
+                                    if let data = item as? Data, let uuidString = String(data: data, encoding: .utf8), let cardId = UUID(uuidString: uuidString) {
+                                        DispatchQueue.main.async {
+                                            boardController.moveCard(cardId: cardId, toColumnId: column.id, toCardIndex: card.index)
+                                        }
+                                    }
+                                }
+                                return true
+                            }
                     }
                     
                     Button(action: {
-                        let card = Card(name: "Card", description: "", index: column.cards.count + 1, parentId: column.id)
+                        let card = Card(name: "Card", description: "", index: column.cards.count, parentId: column.id)
                         boardController.addBoardColumnCard(card: card, boardColumnId: column.id)
                     }) {
                         VStack {
@@ -65,28 +87,19 @@ struct BoardColumnView: View {
                             Text("Add Card")
                         }
                         .frame(width: windowSize.size.width * 0.15, height: 50)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
-                    }
+                        .cornerRadius(24)
+                    }.background(
+                        Color.blue)
                 }
             }
             .padding()
-            .background(Color.gray.opacity(0.1))
+            .background(Color.accentColor)
             .cornerRadius(24)
-            .onDrop(of: [UTType.text], isTargeted: nil) { providers in
-                providers.first?.loadItem(forTypeIdentifier: UTType.text.identifier, options: nil) { (item, error) in
-                    if let data = item as? Data, let uuidString = String(data: data, encoding: .utf8), let cardId = UUID(uuidString: uuidString) {
-                        DispatchQueue.main.async {
-                            boardController.moveCard(cardId: cardId, toColumnId: column.id)
-                        }
-                    }
-                }
-                return true
-            }
+            
             
             
         }.frame(alignment: .leading)
-            .background(Color.black)
+            .background(Color.accentColor)
             .cornerRadius(16)
             .shadow(radius: 2)
             .onDrag {

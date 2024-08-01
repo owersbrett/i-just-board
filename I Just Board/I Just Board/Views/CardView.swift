@@ -12,18 +12,29 @@ struct CardView: View {
     @EnvironmentObject var boardController: BoardController
     @EnvironmentObject var windowSize: WindowSize
     
-    let card: Card
+    @Binding var card: Card
     var body: some View {
         VStack {
-            Text(card.name).font(.title).frame(alignment: .leading)
+            EditableTextField(text: $card.name, onSubmit: {
+                newValue in
+                var updatedCard = card
+                updatedCard.name = newValue
+                boardController.updateCard(updatedCard)
+            }, fontSize: 16)
+            Text("\(card.index)")  // Convert Int to String
             if (!card.description.isEmpty){
-                Text(card.description).font(.subheadline).frame(alignment: .leading)
+                EditableTextField(text: $card.description, onSubmit: {
+                    newValue in
+                    var updatedCard = card
+                    updatedCard.description = newValue
+                    boardController.updateCard(updatedCard)
+                })
             }
         }        .frame(width: windowSize.size.width * 0.15, alignment: .leading)
             
 
-    .padding()
-        .background(Color.gray)
+//    .padding()
+        .background(Color.indigo)
         .cornerRadius(8)
         .shadow(radius: 2)
         .onDrag {

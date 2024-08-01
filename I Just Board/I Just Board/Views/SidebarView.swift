@@ -15,6 +15,9 @@ struct SidebarView: View {
                 ForEach(boards.sorted(by: { $0.index < $1.index }), id: \.id) { board in
                                 SidebarItemView(board: board, boardToCopy: $boardToCopy)
                                     .environmentObject(boardListController)
+                                    .background( board.id == selectedBoard?.id ?
+                                                 Color.cyan : Color.clear)
+                                    .cornerRadius(16)
                             }
                         }
             .listStyle(SidebarListStyle())

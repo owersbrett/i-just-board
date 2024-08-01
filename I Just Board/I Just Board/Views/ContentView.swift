@@ -8,8 +8,6 @@ import SwiftData
 struct ContentView: View {
     @StateObject private var windowSize = WindowSize()
     @StateObject private var confirmationController = ConfirmationController()
-    
-    @StateObject private var currentViewController = CurrentViewController()
     @StateObject private var boardController: BoardController
     @StateObject private var complexityController = ComplexityController()
     @StateObject private var boardListController: BoardListController
@@ -17,7 +15,7 @@ struct ContentView: View {
     init() {
         let boardListController = BoardListController()
         _boardListController = StateObject(wrappedValue: boardListController)
-        let boardController = BoardController(boardListController: boardListController)
+        _ = BoardController(boardListController: boardListController)
         _boardController = StateObject(wrappedValue: BoardController(boardListController: boardListController))
     }
 
@@ -31,7 +29,6 @@ struct ContentView: View {
         .background(WindowSizeReader())
         .environmentObject(boardController)
         .environmentObject(boardListController)
-        .environmentObject(currentViewController)
         .environmentObject(confirmationController)
         .environmentObject(complexityController)
         .environmentObject(windowSize)

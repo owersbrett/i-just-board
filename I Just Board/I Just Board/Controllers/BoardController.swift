@@ -103,28 +103,69 @@ class BoardController: ObservableObject  {
         self.board = board
     }
     
-    func moveCard(cardId: UUID, toColumnId: UUID) {
+    func moveCard(cardId: UUID, toColumnId: UUID, toCardIndex: Int) {
         guard var board = self.board else { return }
-        
         var updatedColumns = board.boardColumns
+        var cardToMove: Card?
+        var sourceColumnIndex: Int?
+        var sourceCardIndex: Int?
         
-        // Find the card and its current column
+        // Find the card to move and its current location
         for (columnIndex, column) in updatedColumns.enumerated() {
             if let cardIndex = column.cards.firstIndex(where: { $0.id == cardId }) {
-                let card = updatedColumns[columnIndex].cards.remove(at: cardIndex)
-                
-                // Find the target column and add the card
-                if let targetColumnIndex = updatedColumns.firstIndex(where: { $0.id == toColumnId }) {
-                    updatedColumns[targetColumnIndex].cards.append(card)
-                    board.boardColumns = updatedColumns
-                    self.board = board
-                    self.boardListController.updateBoard(updatedBoard: board)
-                    
-                    return
-                }
+                cardToMove = column.cards[cardIndex]
+                sourceColumnIndex = columnIndex
+                sourceCardIndex = cardIndex
+                break
             }
         }
+        
+        guard let card = cardToMove, let sourceIndex = sourceColumnIndex, let sourceCardIdx = sourceCardIndex else { return }
+        
+        if card.parentId != toColumnId {
+            // Moving to a different column
+            // Remove from previous column
+            updatedColumns[sourceIndex].cards.remove(at: sourceCardIdx)
+            
+            // Insert at new index in the new column
+            if let targetColumnIndex = updatedColumns.firstIndex(where: { $0.id == toColumnId }) {
+                updatedColumns[targetColumnIndex].cards.insert(card, at: toCardIndex)
+                
+                // Update card's parent ID
+                updatedColumns[targetColumnIndex].cards[toCardIndex].parentId = toColumnId
+                
+                // Reindex current (new) list
+                for (i, _) in updatedColumns[targetColumnIndex].cards.enumerated() {
+                    updatedColumns[targetColumnIndex].cards[i].index = i
+                }
+                
+                // Reindex previous list
+                for (i, _) in updatedColumns[sourceIndex].cards.enumerated() {
+                    updatedColumns[sourceIndex].cards[i].index = i
+                }
+            }
+        } else {
+            // Moving within the same column
+            // Remove from previous position
+            updatedColumns[sourceIndex].cards.remove(at: sourceCardIdx)
+            
+            // Insert at new index
+            let targetColumnIndex = sourceIndex
+            let adjustedIndex = toCardIndex > sourceCardIdx ? toCardIndex : toCardIndex
+            updatedColumns[targetColumnIndex].cards.insert(card, at: adjustedIndex)
+            
+            // Reindex the list
+            for (i, _) in updatedColumns[targetColumnIndex].cards.enumerated() {
+                updatedColumns[targetColumnIndex].cards[i].index = i
+            }
+        }
+        
+        board.boardColumns = updatedColumns
+        self.board = board
+        self.boardListController.updateBoard(updatedBoard: board)
     }
+
+
     
     //    can be optimized by passing along the current column
     func updateCard(_ updatedCard: Card) {

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import SwiftUI
 
 struct EditableTextField: View {
@@ -14,34 +13,52 @@ struct EditableTextField: View {
     @Binding var text: String
     var onSubmit: ((String) -> Void)
     
-
+    // Define a font size variable
+    var fontSize: CGFloat = 24
+    @FocusState private var isFocused: Bool
+    
     var body: some View {
-        if isEditing {
-            TextField("", text: $text, onEditingChanged: { editing in
-                isEditing = editing
-            })
-            .textFieldStyle(PlainTextFieldStyle())
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(isEditing ? Color.blue : Color.clear, lineWidth: 2)
-            )
-            .onTapGesture {
-                isEditing = true
-            }
-            .onSubmit {
-                onSubmit(text);
-                isEditing = false
-            }.padding()
-        } else {
-            Text(text)
-                .font(.title)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.top], 8)
-                .padding()
-                .onTapGesture {
-                    isEditing = true
+        VStack {
+            if isEditing {
+                TextField("", text: $text, onEditingChanged: { editing in
+                    isEditing = editing
+                })
+                .textFieldStyle(PlainTextFieldStyle())
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(isEditing ? Color.blue : Color.clear, lineWidth: 2)
+                )
+                .focused($isFocused)
+                .onAppear {
+                    isFocused = true
                 }
+                .onChange(of: isFocused) { focused in
+                    if !focused {
+                        isEditing = false
+                    }
+                }
+                .onSubmit {
+                    onSubmit(text)
+                    isEditing = false
+                }
+                .font(.system(size: fontSize)) // Set the font size for the TextField
+                .padding()
+            } else {
+                Text(text)
+                    .font(.system(size: fontSize)) // Set the font size for the Text
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .onTapGesture {
+                        isEditing = true
+                    }
+            }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if isEditing {
+                isFocused = false
+            }
         }
     }
 }

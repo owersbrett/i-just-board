@@ -16,14 +16,24 @@ struct MainContentView: View {
     var body: some View {
         VStack {
             if let board = boardController.board {
+                let bindingBoard = Binding<Board>(
+                                                 get: {
+                                                     return boardController.board ?? board
+                                                 },
+                                                 set: { newValue in
+                                                     boardController.board = newValue
+                                                 }
+                                             )
                 VStack {
                     VStack {
-                        Text(board.name).font(.title)
-                        if (!board.description.isEmpty){
-                            Text(board.description).font(.subheadline)
-                        }
+                        EditableTextField(text: bindingBoard.name, onSubmit: {
+                            newValue in
+                            var board = bindingBoard.wrappedValue
+                            board.name = newValue
+                            boardController.updateBoard(board)
+                        })
                     }.padding()
-                        .background(RoundedRectangle(cornerRadius: 8).fill(Color.black)).padding()
+                        .background(RoundedRectangle(cornerRadius: 8).fill(Color.cyan)).padding()
                     
                     
                     
@@ -33,6 +43,10 @@ struct MainContentView: View {
                                 let bindingColumn = Binding<BoardColumn>(
                                                                  get: {
                                                                      guard let index = board.boardColumns.firstIndex(where: { $0.id == column.id }) else {
+                                                                         return column
+                                                                     }
+                                                                     let count = boardController.board?.boardColumns.count
+                                                                     if ((count)! <= index){
                                                                          return column
                                                                      }
                                                                      return boardController.board?.boardColumns[index] ?? column
