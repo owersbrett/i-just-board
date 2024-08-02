@@ -11,30 +11,30 @@ class BoardListController: ObservableObject  {
     
     @Published var boards: [Board] = [] {
         didSet {
-                    saveBoards()
-                }
+            saveBoards()
+        }
     }
     @Published var selectedBoard: Board?
-
+    
     
     init() {
         loadBoards()
     }
     
     func applyTemplate(to: Board, template: [String], templateName: String){
-    
+        
         var newColumns: [BoardColumn] = []
-                  for (index, name) in template.enumerated() {
-                      newColumns.append(BoardColumn(name: name, description: "", cards: [], index: index))
-                  }
-              
+        for (index, name) in template.enumerated() {
+            newColumns.append(BoardColumn(name: name, description: "", cards: [], index: index))
+        }
+        
         var board: Board = Board(name: templateName, description: "", boardColumns: newColumns, index: to.index)
         insertBoardAtIndex(boardToInsert: board, at: to.index)
     }
     
     func insertBoardAtIndex(boardToInsert: Board, at index: Int) {
         debugPrint("Inserting board at index...")
-
+        
         // Update the index of the board to be inserted
         var newBoard = boardToInsert
         var newIndex = index
@@ -44,31 +44,32 @@ class BoardListController: ObservableObject  {
         }
         newBoard.index = newIndex
         newBoard.id = UUID()
-
+        
         boards.insert(newBoard, at: newIndex)
-
+        
         // Update the indices of all subsequent boards
         for i in (newIndex + 1)..<boards.count {
             boards[i].index = i
         }
-
+        
     }
-
+    
     
     func deleteBoards(){
         debugPrint("Don't delete board...!")
-//        self.boards = []
+        //        self.boards = []
     }
     func deleteBoard(boardToDelete: Board){
         self.boards.removeAll(where: {return $0 == boardToDelete})
     }
     
-    func                                                                             addBoard(boardName: String, boardDescription: String)  {
+    func   addBoard(boardName: String, boardDescription: String)  -> Board {
         let board: Board = Board(name: boardName, description: boardDescription, boardColumns: [], index: boards.count + 1)
         debugPrint("Adding board with name: " + boardName + " and description: " + boardDescription)
         self.boards.append(board)
+        return board
     }
-    func selectBoard(board: Board){
+    func selectBoard(board: Board?){
         selectedBoard = board;
     }
     func updateBoard(updatedBoard: Board){
@@ -85,7 +86,7 @@ class BoardListController: ObservableObject  {
             print("Failed to save boards: \(error.localizedDescription)")
         }
     }
-
+    
     private func loadBoards() {
         do {
             let data = try Data(contentsOf: .boardsFile)
@@ -95,7 +96,7 @@ class BoardListController: ObservableObject  {
         }
     }
     
-
+    
     
     
     func updateBoards(boards: [Board]) {

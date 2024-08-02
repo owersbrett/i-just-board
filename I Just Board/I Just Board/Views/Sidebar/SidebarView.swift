@@ -25,7 +25,8 @@ struct SidebarView: View {
                     HStack {
                         Button(action: {
                             debugPrint("Adding board...")
-                            boardListController.addBoard(boardName: "Board", boardDescription: "")
+                            var board = boardListController.addBoard(boardName: "Board", boardDescription: "")
+                            boardListController.selectBoard(board: board)
                         }) {
                             Label("Add Board", systemImage: "plus")
                         }

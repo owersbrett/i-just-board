@@ -6,7 +6,32 @@ struct MainContentView: View {
     @EnvironmentObject var confirmationController: ConfirmationController
     @EnvironmentObject var windowSize: WindowSize
     @EnvironmentObject var themeController: ThemeController
-
+    @State private var inactivityTimer: Timer?
+    @State private var showArrow = false
+    
+    private func startInactivityTimer() {
+        debugPrint("Start Timer...")
+        inactivityTimer?.invalidate()
+        inactivityTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+            debugPrint("Stop Timer...")
+            withAnimation {
+                showArrow = true
+            }
+        }
+    }
+    
+    private func resetInactivityTimer() {
+        inactivityTimer?.invalidate()
+        withAnimation {
+            showArrow = false
+        }
+        startInactivityTimer()
+    }
+    
+    private func animateArrow() {
+        // Implement your arrow animations here
+    }
+    
     var body: some View {
         VStack {
             if let board = boardController.board {
@@ -29,7 +54,7 @@ struct MainContentView: View {
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 8).fill(themeController.currentTheme.boardBackgroundColor))
                     .padding()
-
+                    
                     ScrollView(.horizontal) {
                         HStack(alignment: .top, spacing: 20) {
                             ForEach(board.boardColumns.sorted(by: { $0.index < $1.index }), id: \.id) { column in
@@ -65,7 +90,7 @@ struct MainContentView: View {
                                     }
                                 }
                             }
-
+                            
                             Button(action: {
                                 let boardColumn = BoardColumn(name: "Column", description: "", cards: [], index: board.boardColumns.count)
                                 boardController.addBoardColumn(boardColumn: boardColumn)
@@ -74,9 +99,15 @@ struct MainContentView: View {
                                     Image(systemName: "plus")
                                     Text("Add Column")
                                 }
+                                .onAppear {
+                                    startInactivityTimer()
+                                }
+                                .onTapGesture {
+                                    resetInactivityTimer()
+                                }
                                 .padding()
                                 .frame(width: windowSize.size.width * 0.15, height: 50)
-//                                .background(themeController.currentTheme.addColumnColor)
+                                //                                .background(themeController.currentTheme.addColumnColor)
                                 .cornerRadius(12) // Adjusted corner radius
                                 .foregroundColor(themeController.currentTheme.addCardFontColor) // Ensure text color is readable
                                 .shadow(radius: 5) // Optional: Add shadow for better visual appearance
@@ -88,12 +119,47 @@ struct MainContentView: View {
                     .frame(maxHeight: .infinity, alignment: .top) // Ensure the ScrollView fills available space and aligns to the top
                 }
                 .frame(maxHeight: .infinity, alignment: .top) // Ensure the VStack fills available space and aligns to the top
-
+                
                 Spacer() // Push the content to the top
             } else {
-                Spacer()
-                Text("I Just Boards").frame(alignment: .center)
-                Spacer()
+                GeometryReader {
+                    geometry in
+                    ZStack {
+                        VStack {
+                            Spacer()
+                            VStack{
+                                HStack{
+                                    Text("I").bold().font(.system(size: 100))
+                                    Spacer()
+                                }
+                                HStack{
+                                    Text("Just").bold().font(.system(size: 100))
+                                    Spacer()
+                                }
+                                HStack{
+                                    Text("Board").bold().font(.system(size: 100))
+                                    Spacer()
+                                }
+                            }.padding()
+                        }
+                        
+                        if showArrow {
+                            ArrowView()
+                                .position(x: geometry.size.width - 26, y: 26)
+                                .onAppear {
+                                    animateArrow()
+                                }
+                        }
+                    }.onAppear {
+                        startInactivityTimer()
+                    }
+                    .onTapGesture {
+                        resetInactivityTimer()
+                    }
+                }
+                
+                
+                //                Spacer()
             }
         }
         .alert(isPresented: $confirmationController.showAlert) {

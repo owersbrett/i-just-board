@@ -13,6 +13,7 @@ struct SidebarItemView: View {
     let board: Board
     @Binding var boardToCopy: Board?
     @EnvironmentObject var boardListController: BoardListController
+    @EnvironmentObject var boardController: BoardController
     @State private var showDeleteConfirmation = false
     @State private var boardToDelete: Board?
     
@@ -27,6 +28,7 @@ struct SidebarItemView: View {
         
         .onTapGesture {
             debugPrint("Printing did tap")
+         
             boardListController.selectBoard(board: board)
         }
         .onDrag {
