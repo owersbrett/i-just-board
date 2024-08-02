@@ -1,10 +1,3 @@
-//
-//  MainContentView.swift
-//  I Just Board
-//
-//  Created by Brett Owers on 7/28/24.
-//
-//
 import Foundation
 import SwiftUI
 
@@ -14,7 +7,6 @@ struct MainContentView: View {
     @EnvironmentObject var windowSize: WindowSize
     @EnvironmentObject var themeController: ThemeController
 
-    
     var body: some View {
         VStack {
             if let board = boardController.board {
@@ -28,17 +20,16 @@ struct MainContentView: View {
                 )
                 VStack {
                     VStack {
-                        EditableTextField(text: bindingBoard.name, onSubmit: {
-                            newValue in
+                        EditableTextField(text: bindingBoard.name, viewEnum: .board, onSubmit: { newValue in
                             var board = bindingBoard.wrappedValue
                             board.name = newValue
                             boardController.updateBoard(board)
-                        })
-                    }.padding()
-                        .background(RoundedRectangle(cornerRadius: 8).fill(themeController.currentTheme.boardBackgroundColor)).padding()
-                    
-                    
-                    
+                        }, fontSize: 32)
+                    }
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 8).fill(themeController.currentTheme.boardBackgroundColor))
+                    .padding()
+
                     ScrollView(.horizontal) {
                         HStack(alignment: .top, spacing: 20) {
                             ForEach(board.boardColumns.sorted(by: { $0.index < $1.index }), id: \.id) { column in
@@ -48,7 +39,7 @@ struct MainContentView: View {
                                             return column
                                         }
                                         let count = boardController.board?.boardColumns.count
-                                        if ((count)! <= index){
+                                        if count! <= index {
                                             return column
                                         }
                                         return boardController.board?.boardColumns[index] ?? column
@@ -59,23 +50,22 @@ struct MainContentView: View {
                                     }
                                 )
                                 BoardColumnView(column: bindingColumn, onSelectCard: { card in
-                                    //                                    self.selectedCard = card
+                                    // self.selectedCard = card
                                 }, onColumnDropped: { droppedColumn, targetIndex in
                                     boardController.moveColumn(droppedColumn, toIndex: targetIndex)
                                 })
                                 .onTapGesture {
-                                    //                                    self.selectedColumn = column
+                                    // self.selectedColumn = column
                                 }
-                                .contextMenu{
+                                .contextMenu {
                                     Button(action: {
-                                        confirmationController.setShowAlert(showAlert:true, itemToConfirm: .column(column), action: .delete)
-                                        
-                                    }){
+                                        confirmationController.setShowAlert(showAlert: true, itemToConfirm: .column(column), action: .delete)
+                                    }) {
                                         Text("Delete Column: " + (column.name))
                                     }
                                 }
                             }
-                            
+
                             Button(action: {
                                 let boardColumn = BoardColumn(name: "Column", description: "", cards: [], index: board.boardColumns.count)
                                 boardController.addBoardColumn(boardColumn: boardColumn)
@@ -84,18 +74,21 @@ struct MainContentView: View {
                                     Image(systemName: "plus")
                                     Text("Add Column")
                                 }
+                                .padding()
                                 .frame(width: windowSize.size.width * 0.15, height: 50)
-                                .cornerRadius(24)
-                            }
+//                                .background(themeController.currentTheme.addColumnColor)
+                                .cornerRadius(12) // Adjusted corner radius
+                                .foregroundColor(themeController.currentTheme.addCardFontColor) // Ensure text color is readable
+                                .shadow(radius: 5) // Optional: Add shadow for better visual appearance
+                            }.background(themeController.currentTheme.addCardColor)
+                                .cornerRadius(16)
                         }
                         .padding()
                     }
                     .frame(maxHeight: .infinity, alignment: .top) // Ensure the ScrollView fills available space and aligns to the top
                 }
                 .frame(maxHeight: .infinity, alignment: .top) // Ensure the VStack fills available space and aligns to the top
-                
-                
-                
+
                 Spacer() // Push the content to the top
             } else {
                 Spacer()
@@ -110,12 +103,12 @@ struct MainContentView: View {
                 primaryButton: .destructive(Text("Delete")) {
                     confirmationController.confirmItem(boardController: boardController)
                 },
-                secondaryButton: .cancel(){
+                secondaryButton: .cancel() {
                     confirmationController.setShowAlert(showAlert: false, itemToConfirm: nil, action: nil)
                 }
             )
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top) 
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(themeController.currentTheme.boardBackgroundColor)
     }
 }

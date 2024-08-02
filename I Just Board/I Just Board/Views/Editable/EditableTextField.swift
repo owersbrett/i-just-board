@@ -6,6 +6,8 @@ struct EditableTextField: View {
     @State private var isEditing: Bool = false
     @Binding var text: String
     @EnvironmentObject var windowSize: WindowSize
+    
+    let viewEnum: ViewEnum
 
     var onSubmit: ((String) -> Void)?
     
@@ -20,7 +22,7 @@ struct EditableTextField: View {
                     isEditing = false
                     isFocused = false
                 }
-                .frame(width: windowSize.size.width * 0.15, height: windowSize.size.height * 0.15)
+                .frame(width: (viewEnum == .board ? windowSize.size.width / 2 : windowSize.size.width * 0.15), height:  (viewEnum == .column ? 48 : windowSize.size.height * 0.15 ))
                 .background(
                     RoundedRectangle(cornerRadius: 24)
                 )

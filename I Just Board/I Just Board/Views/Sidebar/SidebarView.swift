@@ -24,12 +24,6 @@ struct SidebarView: View {
                 ToolbarItem(placement: .automatic) {
                     HStack {
                         Button(action: {
-                            debugPrint("Deleting board...")
-                            boardListController.deleteBoards()
-                        }) {
-                            Label("Delete Board", systemImage: "minus")
-                        }
-                        Button(action: {
                             debugPrint("Adding board...")
                             boardListController.addBoard(boardName: "Board", boardDescription: "")
                         }) {

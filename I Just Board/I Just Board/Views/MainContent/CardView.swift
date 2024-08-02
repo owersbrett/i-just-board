@@ -18,7 +18,7 @@ struct CardView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading) {
-                EditableTextField(text: $card.name, onSubmit: { newValue in
+                EditableTextField(text: $card.name,viewEnum: .card, onSubmit: { newValue in
                     var updatedCard = card
                     updatedCard.name = newValue
                     boardController.updateCard(updatedCard)

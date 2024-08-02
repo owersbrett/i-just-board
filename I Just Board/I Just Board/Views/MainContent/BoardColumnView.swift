@@ -21,12 +21,13 @@ struct BoardColumnView: View {
     var body: some View {
         VStack {
             HStack{
-                EditableTextField(text: $column.name, onSubmit: {
+                EditableTextField(text: $column.name, viewEnum: .column, onSubmit: {
                     updatedText in
                     var updatedColumn = column
                     updatedColumn.name = updatedText
                     boardController.updateColumn(updatedColumn)
                 })
+                
                 //                Text(column.name)
                 
             }
