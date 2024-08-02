@@ -11,6 +11,7 @@ struct ContentView: View {
     @StateObject private var boardController: BoardController
     @StateObject private var complexityController = ComplexityController()
     @StateObject private var boardListController: BoardListController
+    @StateObject private var themeController = ThemeController()
 
     init() {
         let boardListController = BoardListController()
@@ -32,5 +33,6 @@ struct ContentView: View {
         .environmentObject(confirmationController)
         .environmentObject(complexityController)
         .environmentObject(windowSize)
+        .environmentObject(themeController)
     }
 }

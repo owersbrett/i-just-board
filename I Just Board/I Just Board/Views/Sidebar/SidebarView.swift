@@ -8,15 +8,13 @@ struct SidebarView: View {
     @EnvironmentObject var boardController: BoardController
     @EnvironmentObject var boardListController: BoardListController
     @EnvironmentObject var windowSize: WindowSize
-
+    @EnvironmentObject var themeController: ThemeController
     var body: some View {
         VStack {
             List(selection: $selectedBoard) {
                 ForEach(boards.sorted(by: { $0.index < $1.index }), id: \.id) { board in
                                 SidebarItemView(board: board, boardToCopy: $boardToCopy)
                                     .environmentObject(boardListController)
-                                    .background( board.id == selectedBoard?.id ?
-                                                 Color.cyan : Color.clear)
                                     .cornerRadius(16)
                             }
                         }
@@ -43,3 +41,4 @@ struct SidebarView: View {
         }
     }
 }
+

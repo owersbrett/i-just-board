@@ -11,7 +11,28 @@ class ConfirmationController: ObservableObject {
     @Published var showAlert = false
     @Published var itemToConfirm: ConfirmableItem?
     @Published var action: ConfirmableAction?
+    @Published var itemsToConfirm: [ConfirmableItem] = []
 
+    
+    func addItemsToConfirm(confirmableItem: ConfirmableItem){
+        self.itemsToConfirm.append(confirmableItem)
+    }
+    
+    func confirmItems(){
+        self.itemsToConfirm.forEach(
+            {
+                item in
+                switch item {
+                case .card(let card):
+                    debugPrint("Card")
+                case .column(let column):
+                    debugPrint("Column")
+                case .board(let board):
+                    debugPrint("Board")
+                }
+            }
+        )
+    }
 
     func setShowAlert(showAlert: Bool, itemToConfirm: ConfirmableItem?, action: ConfirmableAction?) {
         self.showAlert = showAlert

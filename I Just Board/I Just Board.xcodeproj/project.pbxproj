@@ -30,6 +30,8 @@
 		619274872C5AB632009C68AC /* WindowSizeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619274862C5AB632009C68AC /* WindowSizeReaderView.swift */; };
 		6192748A2C5AC8E1009C68AC /* EditableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619274892C5AC8E1009C68AC /* EditableTextField.swift */; };
 		6192748D2C5AD0A1009C68AC /* ConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6192748C2C5AD0A1009C68AC /* ConfirmationController.swift */; };
+		619274922C5C1F1F009C68AC /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619274912C5C1F1F009C68AC /* Color.swift */; };
+		619274952C5C4BF8009C68AC /* ThemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619274942C5C4BF8009C68AC /* ThemeController.swift */; };
 		61B8CACB2C5844CD005D003C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8CACA2C5844CD005D003C /* CardView.swift */; };
 		61BA77942C59E5A000787D8E /* SidebarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BA77932C59E5A000787D8E /* SidebarItemView.swift */; };
 		61DB9BFC2C57197200AE3516 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB9BFB2C57197200AE3516 /* SidebarView.swift */; };
@@ -80,6 +82,8 @@
 		619274862C5AB632009C68AC /* WindowSizeReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowSizeReaderView.swift; sourceTree = "<group>"; };
 		619274892C5AC8E1009C68AC /* EditableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTextField.swift; sourceTree = "<group>"; };
 		6192748C2C5AD0A1009C68AC /* ConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationController.swift; sourceTree = "<group>"; };
+		619274912C5C1F1F009C68AC /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		619274942C5C4BF8009C68AC /* ThemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeController.swift; sourceTree = "<group>"; };
 		61B8CACA2C5844CD005D003C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		61BA77932C59E5A000787D8E /* SidebarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItemView.swift; sourceTree = "<group>"; };
 		61DB9BFB2C57197200AE3516 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 			children = (
 				61553D602C587ACB00E86BEF /* FileManager.swift */,
 				61553D622C587AFE00E86BEF /* URL.swift */,
+				619274912C5C1F1F009C68AC /* Color.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 		616B76332C5696DD0067757D /* I Just Board */ = {
 			isa = PBXGroup;
 			children = (
+				619274932C5C4BE0009C68AC /* Theme */,
 				61553D642C58838000E86BEF /* Delegates */,
 				61553D5F2C587AB300E86BEF /* Extensions */,
 				616B76622C56999A0067757D /* Model */,
@@ -192,14 +198,11 @@
 		616B76602C5699770067757D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				619274902C5BFC03009C68AC /* WindowSize */,
+				6192748F2C5BFBCE009C68AC /* MainContent */,
+				6192748E2C5BFBC6009C68AC /* Sidebar */,
 				619274882C5AC8D2009C68AC /* Editable */,
 				616B76362C5696DD0067757D /* ContentView.swift */,
-				61DB9BFB2C57197200AE3516 /* SidebarView.swift */,
-				611109D32C57218B004A24E3 /* BoardColumnView.swift */,
-				61DB9BFD2C57197F00AE3516 /* MainContentView.swift */,
-				61B8CACA2C5844CD005D003C /* CardView.swift */,
-				61BA77932C59E5A000787D8E /* SidebarItemView.swift */,
-				619274862C5AB632009C68AC /* WindowSizeReaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				616B76732C56EC840067757D /* BoardListController.swift */,
 				616B76792C56F2060067757D /* ComplexityController.swift */,
 				6192748C2C5AD0A1009C68AC /* ConfirmationController.swift */,
+				619274942C5C4BF8009C68AC /* ThemeController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -233,6 +237,40 @@
 				619274892C5AC8E1009C68AC /* EditableTextField.swift */,
 			);
 			path = Editable;
+			sourceTree = "<group>";
+		};
+		6192748E2C5BFBC6009C68AC /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				61DB9BFB2C57197200AE3516 /* SidebarView.swift */,
+				61BA77932C59E5A000787D8E /* SidebarItemView.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		6192748F2C5BFBCE009C68AC /* MainContent */ = {
+			isa = PBXGroup;
+			children = (
+				61DB9BFD2C57197F00AE3516 /* MainContentView.swift */,
+				611109D32C57218B004A24E3 /* BoardColumnView.swift */,
+				61B8CACA2C5844CD005D003C /* CardView.swift */,
+			);
+			path = MainContent;
+			sourceTree = "<group>";
+		};
+		619274902C5BFC03009C68AC /* WindowSize */ = {
+			isa = PBXGroup;
+			children = (
+				619274862C5AB632009C68AC /* WindowSizeReaderView.swift */,
+			);
+			path = WindowSize;
+			sourceTree = "<group>";
+		};
+		619274932C5C4BE0009C68AC /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +405,7 @@
 			files = (
 				616B76372C5696DD0067757D /* ContentView.swift in Sources */,
 				61553D662C58838F00E86BEF /* ColumnDropDelegate.swift in Sources */,
+				619274922C5C1F1F009C68AC /* Color.swift in Sources */,
 				619274872C5AB632009C68AC /* WindowSizeReaderView.swift in Sources */,
 				616B767A2C56F2060067757D /* ComplexityController.swift in Sources */,
 				616B767C2C56F2180067757D /* BoardController.swift in Sources */,
@@ -387,6 +426,7 @@
 				61553D682C589A1000E86BEF /* BoardDropDelegate.swift in Sources */,
 				61DB9BFE2C57197F00AE3516 /* MainContentView.swift in Sources */,
 				6192748A2C5AC8E1009C68AC /* EditableTextField.swift in Sources */,
+				619274952C5C4BF8009C68AC /* ThemeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

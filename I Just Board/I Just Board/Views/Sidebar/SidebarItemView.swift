@@ -63,7 +63,7 @@ struct SidebarItemView: View {
                 }
                 // Add more templates as needed
             } label: {
-                Text("Templates")
+                Text("Insert Template")
             }
         }.alert(isPresented: $showDeleteConfirmation) {
             Alert(

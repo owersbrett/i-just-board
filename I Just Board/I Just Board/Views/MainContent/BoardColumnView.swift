@@ -12,7 +12,7 @@ struct BoardColumnView: View {
     @EnvironmentObject var boardController: BoardController
     @EnvironmentObject var windowSize: WindowSize
     @EnvironmentObject var confirmationController: ConfirmationController
-    
+    @EnvironmentObject var themeController: ThemeController
     
     @Binding var column: BoardColumn
     let onSelectCard: (Card) -> Void
@@ -21,13 +21,13 @@ struct BoardColumnView: View {
     var body: some View {
         VStack {
             HStack{
-            EditableTextField(text: $column.name, onSubmit: {
-                updatedText in
-                var updatedColumn = column
-                updatedColumn.name = updatedText
-                boardController.updateColumn(updatedColumn)
-            })
-//                Text(column.name)
+                EditableTextField(text: $column.name, onSubmit: {
+                    updatedText in
+                    var updatedColumn = column
+                    updatedColumn.name = updatedText
+                    boardController.updateColumn(updatedColumn)
+                })
+                //                Text(column.name)
                 
             }
             
@@ -38,17 +38,17 @@ struct BoardColumnView: View {
                     
                     ForEach(column.cards.sorted(by: {$0.index < $1.index}), id: \.id) { card in
                         let bindingCard = Binding<Card>(
-                                                         get: {
-                                                             guard let index = column.cards.firstIndex(where: { $0.id == card.id }) else {
-                                                                 return card
-                                                             }
-                                                             return column.cards[index]
-                                                         },
-                                                         set: { newValue in
-                                                             guard let index = column.cards.firstIndex(where: { $0.id == card.id }) else { return }
-                                                             column.cards[index] = newValue
-                                                         }
-                                                     )
+                            get: {
+                                guard let index = column.cards.firstIndex(where: { $0.id == card.id }) else {
+                                    return card
+                                }
+                                return column.cards[index]
+                            },
+                            set: { newValue in
+                                guard let index = column.cards.firstIndex(where: { $0.id == card.id }) else { return }
+                                column.cards[index] = newValue
+                            }
+                        )
                         CardView(card: bindingCard)
                             .onTapGesture {
                                 onSelectCard(card)
@@ -78,28 +78,31 @@ struct BoardColumnView: View {
                             }
                     }
                     
-                    Button(action: {
-                        let card = Card(name: "Card", description: "", index: column.cards.count, parentId: column.id)
-                        boardController.addBoardColumnCard(card: card, boardColumnId: column.id)
-                    }) {
-                        VStack {
-                            Image(systemName: "plus")
-                            Text("Add Card")
-                        }
-                        .frame(width: windowSize.size.width * 0.15, height: 50)
-                        .cornerRadius(24)
-                    }.background(
-                        Color.blue)
+                    
+                    
                 }
+                
             }
-            .padding()
-            .background(Color.accentColor)
-            .cornerRadius(24)
+            //            .cornerRadius(24)
             
             
-            
+            Button(action: {
+                let card = Card(name: "Card", description: "", index: column.cards.count, parentId: column.id)
+                boardController.addBoardColumnCard(card: card, boardColumnId: column.id)
+            }) {
+                VStack {
+                    Image(systemName: "plus").foregroundColor(themeController.currentTheme.addCardFontColor)
+                    Text("Add Card").foregroundColor(themeController.currentTheme.addCardFontColor)
+                }
+                
+                
+                .frame(width: windowSize.size.width * 0.15, height: 50)
+                
+                .cornerRadius(0)
+            }.background(
+                themeController.currentTheme.addCardColor)
         }.frame(alignment: .leading)
-            .background(Color.accentColor)
+            .background(themeController.currentTheme.columnBackgroundColor)
             .cornerRadius(16)
             .shadow(radius: 2)
             .onDrag {
