@@ -20,10 +20,9 @@ struct EditableTextField: View {
                     isEditing = false
                     isFocused = false
                 }
-                .frame(height: windowSize.size.height * 0.15)
+                .frame(width: windowSize.size.width * 0.15, height: windowSize.size.height * 0.15)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(isEditing ? Color.blue : Color.clear, lineWidth: 2)
+                    RoundedRectangle(cornerRadius: 24)
                 )
                 .focused($isFocused)
                 .onAppear {
@@ -49,8 +48,9 @@ struct EditableTextField: View {
                     }
             }
         }
-        .contentShape(Rectangle())
-        .onTapGesture {
+        .contentShape(
+                    RoundedRectangle(cornerRadius: 24) // Use a RoundedRectangle for contentShape
+                )        .onTapGesture {
             if isEditing {
                 isFocused = false
             }
@@ -93,10 +93,12 @@ struct EditableTextView: NSViewControllerRepresentable {
         let viewController = NSViewController()
         
         // Create an NSScrollView to contain the NSTextView
-        let scrollView = NSScrollView(frame: NSMakeRect(0, 0, windowSize.size.width * 0.15, windowSize.size.height * 0.15))
-        scrollView.borderType = .bezelBorder
+        let scrollView = NSScrollView(frame: NSMakeRect(0, 0, windowSize.size.width * 0.10, windowSize.size.height * 0.10))
         scrollView.hasVerticalScroller = false
         scrollView.hasHorizontalScroller = false
+        scrollView.wantsLayer = true
+        scrollView.layer?.cornerRadius = 20
+        scrollView.layer?.masksToBounds = true
         
         // Create the CustomTextView and set it as the document view of the scroll view
         let textView = CustomTextView(frame: NSMakeRect(0, 0, scrollView.contentSize.width, scrollView.contentSize.height))
@@ -104,11 +106,22 @@ struct EditableTextView: NSViewControllerRepresentable {
         textView.isVerticallyResizable = true
         textView.isHorizontallyResizable = true
         textView.autoresizingMask = [.width]
+        textView.backgroundColor = .clear // Set background color to clear to avoid overlap
+                textView.drawsBackground = false  // Ensure the background isn't drawn to avoid overlapping
+                
+        textView.textContainerInset = NSSize(width: 8, height: 8)
+
         textView.font = NSFont.systemFont(ofSize: fontSize)
         textView.string = text
         textView.onEnterPressed = {
             self.onExitFocus?()
         }
+        
+        // Apply rounded corners to the NSTextView
+        textView.wantsLayer = true
+        textView.layer?.cornerRadius = 20
+        textView.layer?.masksToBounds = true
+        
         scrollView.documentView = textView
         
         // Add the scroll view (which contains the text view) to the view controller's view

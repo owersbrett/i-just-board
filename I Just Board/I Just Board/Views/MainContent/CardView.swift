@@ -24,30 +24,16 @@ struct CardView: View {
                     boardController.updateCard(updatedCard)
                 }, fontSize: 16)
                 
-                if !card.description.isEmpty {
-                    EditableTextField(text: $card.description, onSubmit: { newValue in
-                        var updatedCard = card
-                        updatedCard.description = newValue
-                        boardController.updateCard(updatedCard)
-                    })
-                }
             }
             .padding([.trailing])
             .frame(width: windowSize.size.width * 0.15, alignment: .leading)
-            .background(themeController.currentTheme.cardBackgroundColor)
-            .cornerRadius(8)
+            .background( themeController.currentTheme.cardBackgroundColor)
+            .cornerRadius(20)
             .shadow(radius: 2)
             .onDrag {
                 NSItemProvider(object: card.id.uuidString as NSString)
             }
             
-            Image(systemName: "ellipsis.circle")
-                
-                
-                .padding()
-                .font(.system(size: 16)) // Adjust the size as needed
-
-                
         }
     }
 }

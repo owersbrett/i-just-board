@@ -151,7 +151,12 @@ class BoardController: ObservableObject  {
             
             // Insert at new index
             let targetColumnIndex = sourceIndex
-            let adjustedIndex = toCardIndex > sourceCardIdx ? toCardIndex : toCardIndex
+            var adjustedIndex = toCardIndex > sourceCardIdx ? toCardIndex : toCardIndex
+
+            var cardsLength = updatedColumns[targetColumnIndex].cards.count
+            if (cardsLength - 1 < adjustedIndex){
+                adjustedIndex = adjustedIndex - 1
+            }
             updatedColumns[targetColumnIndex].cards.insert(card, at: adjustedIndex)
             
             // Reindex the list
